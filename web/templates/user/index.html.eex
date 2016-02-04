@@ -1,0 +1,46 @@
+<h2>Listing users</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Doc</th>
+      <th>Password</th>
+      <th>Dob</th>
+      <th>Gender</th>
+      <th>Image url</th>
+      <th>Email</th>
+      <th>Timezone</th>
+      <th>Locale</th>
+      <th>Demo</th>
+      <th>Active</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for user <- @users do %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.doc %></td>
+      <td><%= user.password %></td>
+      <td><%= user.dob %></td>
+      <td><%= user.gender %></td>
+      <td><%= user.image_url %></td>
+      <td><%= user.email %></td>
+      <td><%= user.timezone %></td>
+      <td><%= user.locale %></td>
+      <td><%= user.demo %></td>
+      <td><%= user.active %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: user_path(@conn, :show, user), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: user_path(@conn, :edit, user), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: user_path(@conn, :delete, user), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New user", to: user_path(@conn, :new) %>

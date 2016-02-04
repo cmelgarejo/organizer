@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Hello Organizer!</title>
+    <title>Organizer</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
@@ -16,8 +16,20 @@
       <header class="header">
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
-            <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
+          <%= if @current_session do %>
+            <li><a href="logout">X <%= @current_session.name %></a></li>
+          <% else %>
+            <li><a href="register"><%= gettext("Register now!")%></a></li>
+          <% end %>
           </ul>
+          <ul class="nav nav-pills pull-right">
+            <li><a href="https://organizer.cmelgarejo.net">Organizer</a></li>
+          </ul>
+          <%= if @current_session do %>
+          <ul class="nav nav-pills pull-right">
+            <li><%= link gettext("Clients"), to: client_path(@conn, :index) %></li>
+          </ul>
+          <% end %>
         </nav>
         <span class="logo"></span>
       </header>

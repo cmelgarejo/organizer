@@ -1,0 +1,6 @@
+<h2>New alerts</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: alert_path(@conn, :create) %>
+
+<%= link "Back", to: alert_path(@conn, :index) %>

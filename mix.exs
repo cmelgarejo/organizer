@@ -17,9 +17,10 @@ defmodule Organizer.Mixfile do
   #
   # Type `mix help compile.app` for more information.
   def application do
-    [mod: {Organizer, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+    apps = [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
+                   :phoenix_ecto, :postgrex, :poison, :oauth2]
+    dev_apps = Mix.env == :dev && [ :reprise, :phoenix_live_reload ] || []
+    [ mod: {Organizer, []}, applications: dev_apps ++ apps ]
   end
 
   # Specifies which paths to compile per environment.
@@ -30,13 +31,24 @@ defmodule Organizer.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.1.4"},
-     {:postgrex, ">= 0.0.0"},
-     {:phoenix_ecto, "~> 2.0"},
-     {:phoenix_html, "~> 2.4"},
-     {:phoenix_live_reload, "~> 1.0", only: :dev},
-     {:gettext, "~> 0.9"},
-     {:cowboy, "~> 1.0"}]
+    [
+      #{:cowboy,              github: "ninenines/cowboy", override: true}
+      {:cowboy,               "~> 1.0"},
+      {:exrm,                 github: "bitwalker/exrm"},
+      #{:conform,              github: "bitwalker/conform", only: :dev}, #only good to create the onfig schema and .conf file
+      #{:httpoison,            github: "edgurgel/httpoison"},
+      #{:logger_file_backend,  github: "onkel-dirtus/logger_file_backend"},
+      {:phoenix,              github: "phoenixframework/phoenix", override: true},
+      {:phoenix_live_reload,  github: "phoenixframework/phoenix_live_reload", only: :dev},
+      {:phoenix_html,         github: "phoenixframework/phoenix_html", override: true},
+      {:phoenix_ecto,         github: "phoenixframework/phoenix_ecto"},
+      #{:postgrex,             github: "ericmj/postgrex", override: true}, #Still no fix for Postgrex.Connection (19/1/2016)
+      {:postgrex,             ">= 0.0.0"}, #0.10.0 Still uses :connection fix on apps list
+      {:reprise,              github: "herenowcoder/reprise", only: :dev},
+      {:oauth2,               github: "scrogson/oauth2"},
+      {:phoenix_live_reload,  github: "phoenixframework/phoenix_live_reload", only: :dev}, #"~> 1.0", only: :dev},
+      {:gettext,              github: "elixir-lang/gettext"}
+   ]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

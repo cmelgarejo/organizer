@@ -14,6 +14,8 @@ config :organizer, Organizer.Endpoint,
   pubsub: [name: Organizer.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+config :organizer, Organizer.Gettext, default_locale: "es"
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
@@ -26,4 +28,19 @@ import_config "#{Mix.env}.exs"
 # Configure phoenix generators
 config :phoenix, :generators,
   migration: true,
-  binary_id: false
+  binary_id: true
+
+config :organizer, Facebook,
+  client_id: "1704348966454406",
+  client_secret: "61d37e5a8f0ee73c92faefb184056eb6",
+  redirect_uri: "http://lvh.me:4000/auth/facebook/callback"
+
+config :organizer, Google,
+  client_id: System.get_env("GOOGLE_CLIENT_ID"),
+  client_secret: System.get_env("GOOGLE_CLIENT_SECRET"),
+  redirect_uri: System.get_env("GOOGLE_REDIRECT_URI")
+
+config :organizer, GitHub,
+  client_id: System.get_env("GITHUB_CLIENT_ID"),
+  client_secret: System.get_env("GITHUB_CLIENT_SECRET"),
+  redirect_uri: System.get_env("GITHUB_REDIRECT_URI")
