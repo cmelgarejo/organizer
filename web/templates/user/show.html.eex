@@ -1,4 +1,6 @@
-<h2>Show user</h2>
+<h2><%= gettext("Profile")%></h2>
+
+<img src='<%= @user.image_url %>' class="pull-right"/>
 
 <ul>
 
@@ -13,11 +15,6 @@
   </li>
 
   <li>
-    <strong>Password:</strong>
-    <%= @user.password %>
-  </li>
-
-  <li>
     <strong>Dob:</strong>
     <%= @user.dob %>
   </li>
@@ -25,11 +22,6 @@
   <li>
     <strong>Gender:</strong>
     <%= @user.gender %>
-  </li>
-
-  <li>
-    <strong>Image url:</strong>
-    <%= @user.image_url %>
   </li>
 
   <li>
@@ -58,6 +50,3 @@
   </li>
 
 </ul>
-
-<%= link "Edit", to: user_path(@conn, :edit, @user) %>
-<%= link "Back", to: user_path(@conn, :index) %>

@@ -1,4 +1,10 @@
+<%= if !@session do %>
 <div class="jumbotron">
   <h2><%= gettext "Welcome to %{name}", name: "Organizer" %></h2>
-  <h3><%= link gettext("Clients"), to: client_path(@conn, :index) %></h3>
+  <%= link gettext("Register now!"), to: register_path(@conn, :index), class: "btn btn-primary btn-lg" %>
 </div>
+<% else %>
+<div class="jumbotron">
+  <%= link gettext("Clients"), to: client_path(@conn, :index), class: "btn btn-success btn-lg" %>
+</div>
+<% end %>

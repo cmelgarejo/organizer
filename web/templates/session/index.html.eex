@@ -1,5 +1,4 @@
-LOGIN !
 <a class="btn btn-primary btn-lg" href="<%= auth_path @conn, :index, "facebook" %>">
-  <i class="fa fa-facebook"></i>
-  <% gettext("Sign in with Facebook") %>
+  <i class="zmdi zmdi-facebook"></i>
+  <%= gettext("Sign in with Facebook") %>
 </a>

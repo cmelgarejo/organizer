@@ -3,33 +3,30 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
     <title>Organizer</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
   <body>
-    <div class="container">
+    <div class="container-fluid">
       <header class="header">
         <nav role="navigation">
+          <ul class="nav nav-pills pull-left">
+            <li style="font-family:PT Sans Narrow; font-size:24px" class="pull-left">
+              Organizer
+            </li>
+          </ul>
           <ul class="nav nav-pills pull-right">
-          <%= if @current_session do %>
-            <li><a href="logout">X <%= @current_session.name %></a></li>
+          <%= if @session do %>
+            <li><%= link @session.name, to: user_path(@conn, :show, %{id: @session.id}), class: "btn btn-info btn-xs" %></li>
+            <li><%= link gettext("Close session"), to: session_path(@conn, :logout), class: "btn btn-danger btn-xs" %></li>
           <% else %>
             <li><a href="register"><%= gettext("Register now!")%></a></li>
           <% end %>
           </ul>
-          <ul class="nav nav-pills pull-right">
-            <li><a href="https://organizer.cmelgarejo.net">Organizer</a></li>
-          </ul>
-          <%= if @current_session do %>
-          <ul class="nav nav-pills pull-right">
-            <li><%= link gettext("Clients"), to: client_path(@conn, :index) %></li>
-          </ul>
-          <% end %>
         </nav>
         <span class="logo"></span>
       </header>
@@ -37,7 +34,7 @@
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
-      <main role="main">
+      <main role="main" id="_main">
         <%= render @view_module, @view_template, assigns %>
       </main>
 

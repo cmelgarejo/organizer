@@ -32,6 +32,16 @@
     <%= @client.phone %>
   </li>
 
+  <li>
+    <strong>Created:</strong>
+    <%= @client.inserted_at %>
+  </li>
+
+  <li>
+    <strong>Updated:</strong>
+    <%= @client.updated_at %>
+  </li>
+
 </ul>
 
 <%= link "Edit", to: client_path(@conn, :edit, @client) %>

@@ -1,35 +1,30 @@
 defmodule Organizer.ClientController do
   use Organizer.Web, :controller
 
-  import Organizer.Utilities
-
   alias Organizer.Client
 
+  plug Organizer.Plug.Authenticate
   plug :scrub_params, "client" when action in [:create, :update]
 
   def index(conn, _params) do
-    {conn, session} = organizer_session(conn)
-    IO.puts "SESSION: #{inspect session}"
-    if(session == :error) do
-      redirect conn, to: login_path(conn, :index)
-    else #do your stuff and render the page.
-      try do
-        clients = Repo.all(from c in Client, where: c.user_id == ^session.user_id)
-        render(conn, "index.html", clients: clients)
-      catch
-        _,_ ->  conn |> put_flash(:info, gettext("Alert created successfully."))
-      end
+    try do
+      session = organizer_session(conn)
+      clients = Repo.all(from c in Client, where: c.user_id == ^session.id)
+      render(conn, "index.html", clients: clients)
+    catch
+      _,_ ->  conn |> put_flash(:error, gettext("ERROR."))
     end
   end
 
   def new(conn, _params) do
-    changeset = Client.changeset(%Client{})
+    session = organizer_session(conn)
+    changeset = Client.changeset(%Client{user_id: session.id})
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"client" => client_params}) do
-    changeset = Client.changeset(%Client{}, client_params)
-
+    session = organizer_session(conn)
+    changeset = Client.changeset(%Client{user_id: session.id}, client_params)
     case Repo.insert(changeset) do
       {:ok, _client} ->
         conn
@@ -41,7 +36,9 @@ defmodule Organizer.ClientController do
   end
 
   def show(conn, %{"id" => id}) do
-    client = Repo.get!(Client, id)
+    session = organizer_session(conn)
+    #client = Repo.get!(Client, id)
+    client = Repo.get_by!(Client, id: id, user_id: session.id)
     render(conn, "show.html", client: client)
   end
 

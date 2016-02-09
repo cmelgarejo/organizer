@@ -9,13 +9,6 @@ defmodule Organizer.AuthController do
     redirect conn, external: authorize_url!(provider)
   end
 
-  def delete(conn, _params) do
-    conn
-    |> put_flash(:info, "You have been logged out!")
-    |> configure_session(drop: true)
-    |> redirect(to: "/")
-  end
-
   @doc """
   This action is reached via `/auth/:provider/callback` is the the callback URL that
   the OAuth2 provider will redirect the user back to with a `code` that will
@@ -23,35 +16,52 @@ defmodule Organizer.AuthController do
   access protected resources on behalf of the user.
   """
   def callback(conn, %{"provider" => provider, "code" => code}) do
-    # Exchange an auth code for an access token
-    token = get_token!(provider, code)
-    # Request the user's data with the access token
-    #READ FROM DB WITH EMAIL FIRSTs
-    user = Organizer.User.changeset(%Organizer.User{}, get_user!(provider, token))
-    case Repo.insert(user) do
-      {:ok, _user} ->
-        #READ BACK FROM DB WITH EMAIL
+    try do
+      # Exchange an auth code for an access token
+      token = get_token!(provider, code)
+      # Request the user's data with the access token
+      #READ FROM DB WITH EMAIL FIRSTs
+      oauth_data = get_user!(provider, token)
+
+      user = Repo.get_by(Organizer.User, email: oauth_data.email)
+
+      if (user == nil) do
+        user = Organizer.User.changeset(%Organizer.User{}, oauth_data)
+
+        case Repo.insert(user) do
+          {:ok, _user} ->
+            #READ BACK FROM DB WITH EMAIL
+            user = Repo.get_by(Organizer.User, email: oauth_data.email)
+            start_session(conn, Map.merge(oauth_data, %{id: user.id}), token)
+          {:error, _changeset} ->
+            conn
+            |> put_flash(:error, gettext("User cannot be created."))
+            |> redirect(to: register_path(conn, :index))
+        end
+      else
+        start_session(conn, Map.merge(oauth_data, %{id: user.id}), token)
+      end
+      #IO.puts "USER: #{inspect user}"
+      # Store the user in the session under `:current_user` and redirect to /.
+      # In most cases, we'd probably just store the user's ID that can be used
+      # to fetch from the database. In this case, since this example app has no
+      # database, I'm just storing the user map.
+      #
+      # If you need to make additional resource requests, you may want to store
+      # the access token as well.
+    rescue
+      e in Exception ->
         conn
-        |> put_session(:current_session, user)
-        |> put_session(:access_token, token.access_token)
-        |> redirect(to: "/")
-      #   conn
-      #   |> put_flash(:info, gettext("User created successfully."))
-      #   |> redirect(to: client_path(conn, :index))
-      {:error, _changeset} ->
-        conn
-        |> put_flash(:error, gettext("User cannot be created."))
-        |> redirect(to: register_path(conn, :index))
+        |> put_status(500)
+        |> put_flash(:error, gettext("User cannot be created.") <> e.message)
     end
-    #IO.puts "USER: #{inspect user}"
-    # Store the user in the session under `:current_user` and redirect to /.
-    # In most cases, we'd probably just store the user's ID that can be used
-    # to fetch from the database. In this case, since this example app has no
-    # database, I'm just storing the user map.
-    #
-    # If you need to make additional resource requests, you may want to store
-    # the access token as well.
   end
+
+  defp start_session(conn, user, token), do:
+    conn
+    |> put_session(:session, user |> Map.take([:id, :name, :doc, :password, :dob, :gender, :image_url, :email, :timezone, :locale, :demo, :active, :xtra_info]))
+    |> put_session(:access_token, token.access_token)
+    |> redirect(to: "/clients")
 
   defp authorize_url!("github"),   do: GitHub.authorize_url!
   defp authorize_url!("google"),   do: Google.authorize_url!(scope: "https://www.googleapis.com/auth/userinfo.email")

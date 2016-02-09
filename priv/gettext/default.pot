@@ -3,16 +3,15 @@
 ## translations that can't be statically extracted. Run `mix
 ## gettext.extract` to bring this file up to date. Leave `msgstr`s empty as
 ## changing them here as no effect; edit them in PO (`.po`) files instead.
-#: web/templates/page/index.html.eex:2
+#: web/templates/page/index.html.eex:3
 msgid "Welcome to %{name}"
 msgstr ""
 
-#: web/templates/layout/app.html.eex:30 web/templates/page/index.html.eex:3
+#: web/templates/client/index.html.eex:1 web/templates/page/index.html.eex:8
 msgid "Clients"
 msgstr ""
 
 #: web/controllers/alert_controller.ex:25
-#: web/controllers/client_controller.ex:19
 msgid "Alert created successfully."
 msgstr ""
 
@@ -32,7 +31,7 @@ msgstr ""
 msgid "Edit alerts"
 msgstr ""
 
-#: web/templates/alert/form.html.eex:4
+#: web/templates/alert/form.html.eex:4 web/templates/client/form.html.eex:4
 msgid "Oops, something went wrong! Please check the errors below."
 msgstr ""
 
@@ -40,22 +39,63 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
-#: web/templates/layout/app.html.eex:22
+#: web/templates/layout/app.html.eex:27 web/templates/page/index.html.eex:4
 msgid "Register now!"
 msgstr ""
 
-#: web/templates/login/index.html.eex:4 web/templates/register/index.html.eex:3
+#: web/templates/register/index.html.eex:3
+#: web/templates/session/index.html.eex:3
 msgid "Sign in with Facebook"
 msgstr ""
 
-#: web/controllers/user_controller.ex:24
+#: web/controllers/user_controller.ex:25
 msgid "User created successfully."
 msgstr ""
 
-#: web/controllers/user_controller.ex:64
+#: web/controllers/user_controller.ex:66
 msgid "User deleted successfully."
 msgstr ""
 
-#: web/controllers/user_controller.ex:49
+#: web/controllers/user_controller.ex:51
 msgid "User updated successfully."
+msgstr ""
+
+#: web/templates/layout/app.html.eex:25
+msgid "Close session"
+msgstr ""
+
+#: web/controllers/client_controller.ex:15
+msgid "ERROR."
+msgstr ""
+
+#: web/templates/client/index.html.eex:79
+msgid "Loading..."
+msgstr ""
+
+#: web/templates/client/index.html.eex:35 web/templates/client/index.html.eex:43
+msgid "New client"
+msgstr ""
+
+#: web/templates/client/index.html.eex:70
+msgid "No Rows To Show"
+msgstr ""
+
+#: web/templates/client/index.html.eex:71
+msgid "Page"
+msgstr ""
+
+#: web/templates/user/show.html.eex:1
+msgid "Profile"
+msgstr ""
+
+#: web/controllers/auth_controller.ex:38 web/controllers/auth_controller.ex:56
+msgid "User cannot be created."
+msgstr ""
+
+#: web/controllers/session_controller.ex:14
+msgid "You have been logged out!"
+msgstr ""
+
+#: lib/organizer/plug/authenticate.ex:15
+msgid "You need to be signed in to view this page"
 msgstr ""

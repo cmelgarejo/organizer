@@ -30,12 +30,15 @@ defmodule Organizer.Web do
     quote do
       use Phoenix.Controller
 
+      alias Organizer.User
+
       alias Organizer.Repo
       import Ecto
       import Ecto.Query, only: [from: 1, from: 2]
 
       import Organizer.Router.Helpers
       import Organizer.Gettext
+      import Organizer.Utilities
     end
   end
 

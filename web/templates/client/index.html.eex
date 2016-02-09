@@ -1,6 +1,6 @@
-<h2>Listing clients</h2>
+<h2><%= gettext("Clients")%></h2>
 
-<table class="table">
+<!-- <table class="table">
   <thead>
     <tr>
       <th>Name</th>
@@ -31,6 +31,93 @@
     </tr>
 <% end %>
   </tbody>
-</table>
+</table> -->
+<%= link gettext("New client"), to: client_path(@conn, :new) %>
 
-<%= link "New client", to: client_path(@conn, :new) %>
+<div id="client_grid" class="ag-grid ag-responsive ag-blue"></div>
+
+<script>
+var grid, gridDiv;
+(function() {
+  var columnDefs = [
+      {headerName: 'Commands', width: 100, template: '<%= link gettext("New client"), to: client_path(@conn, :new) %> data.id', valueGetter: 'data.id'},
+    {headerName: 'Name', field: 'name'},
+    {headerName: 'Name', field: 'name'},
+    {headerName: 'Document', field: 'doc'},
+    {headerName: 'Charge Rate', field: 'charge_rate'},
+    {headerName: 'Charge Date', field: 'charge_date'},
+    {headerName: 'Email', field: 'email'},
+    {headerName: 'Phone', field: 'phone'},
+  ];
+
+  var rowData = [
+    <%= for client <- @clients do %>
+    { id: '<%= client.id %>', name: '<%= client.name %>', doc: '<%= client.doc %>',
+      charge_rate: '<%= client.charge_rate %>', charge_date: '<%= client.charge_date %>',
+      email: '<%= client.email %>', phone: '<%= client.phone %>'},
+    <% end %>
+  ];
+
+  var gridOptions = {
+      // note - we do not set 'virtualPaging' here, so the grid knows we are doing standard paging
+      //enableSorting: true,
+      enableFilter: true,
+      enableColResize: false,
+      columnDefs: columnDefs,
+      //showToolPanel: true,
+      localeText: {
+          // for filter panel
+          noRowsToShow: '<%= gettext("No Rows To Show")%>',
+          page: '<%= gettext("Page") %>',
+          more: 'More',
+          to: 'To',
+          of: 'Of',
+          next: 'Next',
+          last: 'st',
+          first: 'First',
+          previous: 'Previous',
+          loadingOoo: '<%= gettext("Loading...")%>',
+          // for set filter
+          selectAll: 'Select All',
+          searchOoo: 'Search...',
+          blanks: '*Blank*',
+          // for number filter and string filter
+          filterOoo: 'Filter...',
+          applyFilter: 'Apply Filter...',
+          // for number filter
+          equals: 'Equals',
+          lessThan: 'Less Than',
+          greaterThan: 'Greater Than',
+          // for text filter
+          contains: 'Contains',
+          startsWith: 'Starts with',
+          endsWith: 'Ends with',
+          // tool panel
+          columns: 'Columns',
+          rowGroupColumns: 'Pivot Cols',
+          rowGroupColumnsEmptyMessage: ' please drag cols to here',
+          valueColumns: 'Value Cols',
+          valueColumnsEmptyMessage: ' please drag cols to here'
+      }
+  };
+
+  function gridSizeToFit() {
+    gridDiv.style.setProperty("height", (window.innerHeight - 220)+"px")
+    grid.gridOptions.api.sizeColumnsToFit();
+  }
+
+  function sizeToFit() {
+      setTimeout(gridSizeToFit, 100);
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+      gridDiv = document.querySelector('#client_grid');
+      gridOptions.rowData = rowData;
+      grid = new ag.grid.Grid(gridDiv, gridOptions);
+      grid.gridOptions.api.sizeColumnsToFit();
+  });
+
+  window.addEventListener("resize", sizeToFit);
+
+})();
+</script>

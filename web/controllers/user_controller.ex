@@ -3,6 +3,7 @@ defmodule Organizer.UserController do
 
   alias Organizer.User
 
+  plug Organizer.Plug.Authenticate
   plug :scrub_params, "user" when action in [:create, :update]
 
   def index(conn, _params) do
@@ -29,7 +30,8 @@ defmodule Organizer.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = Repo.get!(User, id)
+    session = organizer_session(conn)
+    user = Repo.get!(User, session.id)
     render(conn, "show.html", user: user)
   end
 

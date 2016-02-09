@@ -7,7 +7,7 @@ defmodule Organizer.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :assign_current_session
+    plug :assign_session
   end
 
   pipeline :api do
@@ -19,13 +19,11 @@ defmodule Organizer.Router do
 
     get "/", PageController, :index
 
-    # resources "/register", RegisterController
+    get "/register", RegisterController, :index
+    get "/profile",  UserController, :show
 
-    resources "/users", UserController
     resources "/clients", ClientController
     resources "/alerts", AlertController
-    resources "/login", LoginController
-    resources "/register", RegisterController
     # get    "/clients/:client_id/alerts",          AlertController, :index
     # get    "/clients/:client_id/alerts/edit/:id", AlertController, :edit
     # get    "/clients/:client_id/alerts/new",      AlertController, :new
@@ -39,15 +37,19 @@ defmodule Organizer.Router do
   scope "/auth", Organizer do
     pipe_through :browser
 
+    get "/login",    SessionController,  :index
+    get "/logout",    SessionController,  :logout
+
     get "/:provider", AuthController, :index
     get "/:provider/callback", AuthController, :callback
+
     delete "/logout", AuthController, :delete
   end
 
   # Fetch the current user from the session and add it to `conn.assigns`. This
     # will allow you to have access to the current user in your views with
     # `@current_user`.
-    defp assign_current_session(conn, _) do
-      assign(conn, :current_session, get_session(conn, :current_session))
+    defp assign_session(conn, _) do
+      assign(conn, :session, get_session(conn, :session))
     end
 end

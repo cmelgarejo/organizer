@@ -4,8 +4,8 @@ defmodule Organizer.Utilities do
   Assigns the session to the current Plug.conn
   """
   def organizer_session(conn) do
-    IO.puts("SESSION: #{inspect get_session(conn, :current_session)}") 
-    if ((session = get_session(conn, :current_session)) != nil), do: {conn, session}, else: {conn, :error}
+    #IO.puts("SESSION: #{inspect get_session(conn, :session)}")
+    if (session = get_session(conn, :session)), do: session, else: nil
   end
 
   def remove_list_from_list(l, ltr) do
