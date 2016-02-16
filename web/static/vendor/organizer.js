@@ -8,9 +8,13 @@ function goBack() {
   window.history.back();
 }
 
-function ajax(method, path, data, async) {
+function ajax(method, path, data, async, onreadystatechange, reload) {
+  reload = (reload === 'undefined' ? true : false);
   async = async ? async : true;
   var xhttp = new XMLHttpRequest();
+  if(onreadystatechange) {
+    xhttp.onreadystatechange = onreadystatechange;
+  }
   xhttp.open(method, path, async);
   if(data) {
     data.headers.forEach(function(h) {
@@ -19,7 +23,7 @@ function ajax(method, path, data, async) {
     xhttp.send(data.data);
   } else {
     xhttp.send();
-    location.reload();
+    if(reload) location.reload();
   }
   return true;
 }
@@ -44,6 +48,7 @@ function gridCommands(buttons) {
   buttons.forEach(function(b) {
     result += '<a type="button" class="btn btn-xs btn-'
     + (b.class ? b.class : "default") + '" '
+    + "onclick=\""  + b.onclick + '\" '
     + 'data-method="' + (b.method ? b.method : "get")
     + '" href="'
     + b.path + '" title="' + b.title + '"><span class="zmdi zmdi-'
@@ -91,4 +96,9 @@ function killAlert() {
       keepKilling = true;
   }
   if (keepKilling) setTimeout(killAlert, 3000);
+}
+
+function confirmDelete(){
+  confirm( "HUE")
+  return false;
 }

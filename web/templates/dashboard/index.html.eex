@@ -40,7 +40,7 @@
       {
         icon: "delete", title: "<%= gettext("Delete Alert") %>",
         path: '<%= alert_path(@conn, :index) %>/' + params.data.id + '/delete',
-        class: 'danger', method: "delete"
+        class: 'danger', method: "delete", onclick: "confirmDelete()"
       },
     ];
     return gridCommands(buttons);
@@ -84,7 +84,18 @@
     sizeToFit(grid, gridDiv, 220);
     window.addEventListener("resize", sizeToFit(grid, gridDiv, 220));
     setTimeout(killAlert, 10000);
+    setInterval(reloadGrid, 10000);
   });
+
+  function reloadGrid(){
+    ajax("GET", "<%= dashboard_path(@conn, :grid_data) %>", null, true, onReadyStateChange)
+  }
+
+  function onReadyStateChange() {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log(this.responseText);
+    }
+  }
 
 })();
 

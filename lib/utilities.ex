@@ -2,6 +2,10 @@ defmodule Organizer.Utilities do
   import Plug.Conn, only: [get_session: 2, put_session: 3, assign: 3]
   import Organizer.Gettext
 
+  def get_referer(conn) do
+    (conn.req_headers |> Enum.into(%{}))["referer"]
+  end
+
   def day_of_each_month(day) do
     day = if (day < 10), do: ("0" <> to_string(day)), else: to_string(day)
     gettext("The ") <> day <> gettext(" of each month")

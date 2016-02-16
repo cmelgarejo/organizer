@@ -30,7 +30,7 @@ defmodule Organizer.ClientController do
       {:ok, _client} ->
         conn
         |> put_flash(:info, gettext("Client created successfully."))
-        |> redirect(to: client_path(conn, :index))
+        |> redirect(to: client_path(conn, :show, changeset))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -71,6 +71,6 @@ defmodule Organizer.ClientController do
 
     conn
     |> put_flash(:info, gettext("Client deleted successfully."))
-    |> redirect(to: client_path(conn, :index))
+    |> redirect(to: client_path(conn, :show, client))
   end
 end

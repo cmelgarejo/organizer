@@ -18,6 +18,7 @@ body, form, ul, table {
 
 /* Phoenix flash messages */
 .alert:empty { display: none; }
+.alert { font-size: 14pt; }
 
 /* Phoenix inline forms in links and buttons */
 form.link, form.button {

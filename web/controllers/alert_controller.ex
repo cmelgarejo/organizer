@@ -22,7 +22,7 @@ defmodule Organizer.AlertController do
       {:ok, _alerts} ->
         conn
         |> put_flash(:info, gettext("Alert created successfully."))
-        |> redirect(to: dashboard_path(conn, :index))
+        |> redirect(to: client_path(conn, :show, alert_params["client_id"]))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset, client_id: alert_params["client_id"])
     end
@@ -47,7 +47,7 @@ defmodule Organizer.AlertController do
       {:ok, _alert} ->
         conn
         |> put_flash(:info, gettext("Alert updated successfully."))
-        |> redirect(to: dashboard_path(conn, :index))
+        |> redirect(external: Organizer.Utilities.get_referer(conn))
       {:error, changeset} ->
         render(conn, "edit.html", alert: alert, changeset: changeset, client_id: alert_params["client_id"])
     end
@@ -59,24 +59,20 @@ defmodule Organizer.AlertController do
     case Repo.update(changeset) do
       {:ok, _alert} ->
         conn
-        # |> put_flash(:info, gettext("Alert updated successfully."))
         |> redirect(to: dashboard_path(conn, :index))
       {:error, _changeset} ->
         conn
-        #|> put_flash(:error, gettext("An error has ocurred, please contact with the system administrator"))
         |> redirect(to: dashboard_path(conn, :index))
     end
   end
 
   def delete(conn, %{"id" => id}) do
     alert = Repo.get!(Alert, id)
-
     # Here we use delete! (with a bang) because we expect
     # it to always work (and if it does not, it will raise).
     Repo.delete!(alert)
-
     conn
     |> put_flash(:info, gettext("Alert deleted successfully."))
-    |> redirect(to: dashboard_path(conn, :index))
+    |> redirect(external: Organizer.Utilities.get_referer(conn))
   end
 end

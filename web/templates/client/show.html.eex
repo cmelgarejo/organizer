@@ -117,6 +117,7 @@
     grid = new agGrid.Grid(gridDiv, gridOptions);
     sizeToFit(grid, gridDiv, 560);
     window.addEventListener("resize", sizeToFit(grid, gridDiv, 560));
+    setTimeout(killAlert, 10000);
   });
 
 })();

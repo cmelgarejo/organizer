@@ -47,5 +47,5 @@ config :organizer, GitHub,
 
 config :organizer, Organizer.AuthController, single_user: true, #or false for Facebook App
 user: %{ name: "Sonia Servin", email: "info@organizer.cmelgarejo.net", doc: "",
-password: "123456", dob: nil, gender: "female", image_url: nil, birthday: nil,
+password: "123456", dob: "1970-01-01", gender: "female", image_url: nil, birthday: nil,
 timezone: "-3", locale: "es", demo: false, active: true, xtra_info: nil}
