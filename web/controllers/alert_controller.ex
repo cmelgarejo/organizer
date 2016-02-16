@@ -11,21 +11,20 @@ defmodule Organizer.AlertController do
     render(conn, "index.html", alerts: alerts)
   end
 
-  def new(conn, _params) do
+  def new(conn, %{"client_id" => client_id}) do
     changeset = Alert.changeset(%Alert{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, client_id: client_id)
   end
 
   def create(conn, %{"alert" => alert_params}) do
     changeset = Alert.changeset(%Alert{}, alert_params)
-
     case Repo.insert(changeset) do
       {:ok, _alerts} ->
         conn
         |> put_flash(:info, gettext("Alert created successfully."))
-        |> redirect(to: alert_path(conn, :index))
+        |> redirect(to: dashboard_path(conn, :index))
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, client_id: alert_params["client_id"])
     end
   end
 
@@ -45,12 +44,27 @@ defmodule Organizer.AlertController do
     changeset = Alert.changeset(alert, alert_params)
 
     case Repo.update(changeset) do
-      {:ok, alert} ->
+      {:ok, _alert} ->
         conn
         |> put_flash(:info, gettext("Alert updated successfully."))
-        |> redirect(to: alert_path(conn, :show, alert))
+        |> redirect(to: dashboard_path(conn, :index))
       {:error, changeset} ->
-        render(conn, "edit.html", alert: alert, changeset: changeset)
+        render(conn, "edit.html", alert: alert, changeset: changeset, client_id: alert_params["client_id"])
+    end
+  end
+
+  def update_status(conn, %{"id" => id, "status" => status}) do
+    alert = Repo.get!(Alert, id)
+    changeset = Alert.changeset(alert, %{status: status})
+    case Repo.update(changeset) do
+      {:ok, _alert} ->
+        conn
+        # |> put_flash(:info, gettext("Alert updated successfully."))
+        |> redirect(to: dashboard_path(conn, :index))
+      {:error, _changeset} ->
+        conn
+        #|> put_flash(:error, gettext("An error has ocurred, please contact with the system administrator"))
+        |> redirect(to: dashboard_path(conn, :index))
     end
   end
 
@@ -63,6 +77,6 @@ defmodule Organizer.AlertController do
 
     conn
     |> put_flash(:info, gettext("Alert deleted successfully."))
-    |> redirect(to: alert_path(conn, :index))
+    |> redirect(to: dashboard_path(conn, :index))
   end
 end

@@ -29,7 +29,7 @@ defmodule Organizer.UserController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, _params) do
     session = organizer_session(conn)
     user = Repo.get!(User, session.id)
     render(conn, "show.html", user: user)

@@ -17,24 +17,19 @@
     "tests"
   ],
   "dependencies": {
-    "ag-grid": "^3.2.2",
+    "ag-grid": "~3.3",
     "material-design-iconic-font": "^2.2.0",
     "bootstrap-css": "~3.3.6"
   },
   "overrides": {
-    "jquery": {
-      "main": ["dist/jquery.min.js"]
-    },
     "bootstrap-css" : {
       "main": [ "css/bootstrap.min.css" ]
     },
     "ag-grid": {
       "main": [
         "dist/ag-grid.min.js",
-        "dist/ag-grid.min.css",
-        "dist/theme-fresh.min.css",
-        "dist/theme-blue.min.css",
-        "dist/theme-dark.min.css"
+        "dist/styles/ag-grid.css",
+        "dist/styles/theme-blue.min.css"
       ]
     }
   }

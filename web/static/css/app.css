@@ -97,3 +97,54 @@ form.link, form.button {
 .nav-pills > li > a.btn-info:hover {
   background-color: #337ab7 !important;
 }
+.nav-pills > li > a.btn-success:hover {
+  background-color: #4cae4c !important;
+}
+.center {
+  text-align: center;
+  align-items: center;
+}
+
+/* BTN FLOAT */
+a.btn-float {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  position: absolute;
+  line-height: 48px;
+}
+a.btn-float:hover {
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.18);
+}
+a.btn-float i {
+  font-size: 28px;
+}
+a.btn-float:not(.bgm-white):not(.bgm-gray) > i {
+  color: #fff;
+}
+a.btn-float.bgm-white > i,
+a.btn-float.bgm-gray > i {
+  color: #333;
+}
+
+div.btn-float-div {
+  float:right !important;
+  width: 50px;
+}
+
+.disabled {
+  disabled: disabled;
+}
+
+.ag-root {
+  font-family: 'Calibri', 'PT Sans Narrow' !important;
+  font-size: 12pt !important;
+}
+
+.ag-header  {
+  font-family: 'PT Sans Narrow' !important;
+}
+
+.btn-add {
+  font-size: 16px;
+}

@@ -1,4 +1,10 @@
+<%= if Organizer.AuthController.options[:single_user] do %>
+<a class="btn btn-primary btn-lg" href="<%= auth_path @conn, :index, "single_user" %>">
+  <%= gettext("Sign In") %>
+</a>
+<% else %>
 <a class="btn btn-primary btn-lg" href="<%= auth_path @conn, :index, "facebook" %>">
   <i class="zmdi zmdi-facebook"></i>
   <%= gettext("Sign in with Facebook") %>
 </a>
+<% end %>

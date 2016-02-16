@@ -1,28 +1,30 @@
-<h2>Show alerts</h2>
+<h3>
+<button class="btn btn-primary" onclick="goBack();">
+  <i class="zmdi zmdi-arrow-left"></i>&nbsp;<%= gettext("Back") %>
+</button>
+&nbsp;  <%= gettext("Alert Details")%>&nbsp;
+<a class="btn btn-default" href="<%= alert_path(@conn, :edit, @alert) %>">
+  <i class="zmdi zmdi-edit"></i>&nbsp;<%= gettext("Edit") %>
+</a>
+</h3>
 
-<ul>
-
-  <li>
-    <strong>Description:</strong>
-    <%= @alert.description %>
-  </li>
-
-  <li>
-    <strong>Due date:</strong>
-    <%= @alert.due_date %>
-  </li>
-
-  <li>
-    <strong>Notes:</strong>
-    <%= @alert.notes %>
-  </li>
-
-  <li>
-    <strong>Status:</strong>
-    <%= @alert.status %>
-  </li>
-
-</ul>
-
-<%= link "Edit", to: alert_path(@conn, :edit, @alert) %>
-<%= link "Back", to: alert_path(@conn, :index) %>
+<table class="table table-condensed table-stripped">
+  <tbody>
+    <tr>
+      <td><strong><%= gettext("Description") %></strong></td>
+      <td><%= @alert.description %></td>
+    </tr>
+    <tr>
+      <td><strong><%= gettext("Due date") %></strong></td>
+      <td><%= @alert.due_date %></td>
+    </tr>
+    <tr>
+      <td><strong><%= gettext("Notes")%></strong></td>
+      <td><pre><%= @alert.notes %></pre></td>
+    </tr>
+    <tr>
+      <td><strong><%= gettext("Created")%></strong></td>
+      <td><pre><%= @alert.inserted_at %></pre></td>
+    </tr>
+  </tbody>
+</table>

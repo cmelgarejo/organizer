@@ -2,18 +2,19 @@ defmodule Organizer.ClientController do
   use Organizer.Web, :controller
 
   alias Organizer.Client
+  alias Organizer.Alert
 
   plug Organizer.Plug.Authenticate
   plug :scrub_params, "client" when action in [:create, :update]
 
   def index(conn, _params) do
-    try do
+    # try do
       session = organizer_session(conn)
       clients = Repo.all(from c in Client, where: c.user_id == ^session.id)
       render(conn, "index.html", clients: clients)
-    catch
-      _,_ ->  conn |> put_flash(:error, gettext("ERROR."))
-    end
+    # catch
+    #   _,_ ->  conn |> put_flash(:error, gettext("An error has ocurred, please contact with the system administrator"))
+    # end
   end
 
   def new(conn, _params) do
@@ -28,7 +29,7 @@ defmodule Organizer.ClientController do
     case Repo.insert(changeset) do
       {:ok, _client} ->
         conn
-        |> put_flash(:info, "Client created successfully.")
+        |> put_flash(:info, gettext("Client created successfully."))
         |> redirect(to: client_path(conn, :index))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -37,9 +38,9 @@ defmodule Organizer.ClientController do
 
   def show(conn, %{"id" => id}) do
     session = organizer_session(conn)
-    #client = Repo.get!(Client, id)
     client = Repo.get_by!(Client, id: id, user_id: session.id)
-    render(conn, "show.html", client: client)
+    alerts = Repo.all(from a in Alert, where: a.client_id == ^id, order_by: [desc: a.status])
+    render(conn, "show.html", client: client, alerts: alerts)
   end
 
   def edit(conn, %{"id" => id}) do
@@ -51,11 +52,10 @@ defmodule Organizer.ClientController do
   def update(conn, %{"id" => id, "client" => client_params}) do
     client = Repo.get!(Client, id)
     changeset = Client.changeset(client, client_params)
-
     case Repo.update(changeset) do
       {:ok, client} ->
         conn
-        |> put_flash(:info, "Client updated successfully.")
+        |> put_flash(:info, gettext("Client updated successfully."))
         |> redirect(to: client_path(conn, :show, client))
       {:error, changeset} ->
         render(conn, "edit.html", client: client, changeset: changeset)
@@ -70,7 +70,7 @@ defmodule Organizer.ClientController do
     Repo.delete!(client)
 
     conn
-    |> put_flash(:info, "Client deleted successfully.")
+    |> put_flash(:info, gettext("Client deleted successfully."))
     |> redirect(to: client_path(conn, :index))
   end
 end

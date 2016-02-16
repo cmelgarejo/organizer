@@ -44,3 +44,8 @@ config :organizer, GitHub,
   client_id: System.get_env("GITHUB_CLIENT_ID"),
   client_secret: System.get_env("GITHUB_CLIENT_SECRET"),
   redirect_uri: System.get_env("GITHUB_REDIRECT_URI")
+
+config :organizer, Organizer.AuthController, single_user: true, #or false for Facebook App
+user: %{ name: "Sonia Servin", email: "info@organizer.cmelgarejo.net", doc: "",
+password: "123456", dob: nil, gender: "female", image_url: nil, birthday: nil,
+timezone: "-3", locale: "es", demo: false, active: true, xtra_info: nil}

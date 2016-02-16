@@ -2,7 +2,7 @@ defmodule Organizer.ClientControllerTest do
   use Organizer.ConnCase
 
   alias Organizer.Client
-  @valid_attrs %{charge_date: "2010-04-17", charge_rate: "120.5", doc: "some content", email: "some content", name: "some content", phone: "some content"}
+  @valid_attrs %{charge_date: "2010-04-17", fee_amount: "120.5", doc: "some content", email: "some content", name: "some content", phone: "some content"}
   @invalid_attrs %{}
 
   test "lists all entries on index", %{conn: conn} do

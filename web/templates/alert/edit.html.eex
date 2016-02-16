@@ -1,6 +1,9 @@
-<h2><%= gettext("Edit alerts") %></h2>
+<h2>
+<button class="btn btn-primary" onclick="goBack();">
+  <i class="zmdi zmdi-arrow-left"></i>&nbsp;<%= gettext("Back") %>
+</button>
+&nbsp; <%= gettext("Edit Alert")%> &nbsp;
+</h2>
 
-<%= render "form.html", changeset: @changeset,
+<%= render "form.html", changeset: @changeset, client_id: @changeset.model.client_id,
                         action: alert_path(@conn, :update, @alert) %>
-
-<%= link gettext("Back"), to: alert_path(@conn, :index) %>

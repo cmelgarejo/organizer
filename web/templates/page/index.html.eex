@@ -5,6 +5,62 @@
 </div>
 <% else %>
 <div class="jumbotron">
-  <%= link gettext("Clients"), to: client_path(@conn, :index), class: "btn btn-success btn-lg" %>
+  <div id="alert_grid" class="ag-grid ag-responsive ag-blue"></div>
 </div>
 <% end %>
+
+<script>
+var grid, gridDiv;
+(function() {
+  var columnDefs = [
+    {headerName: '<%= gettext("Commands") %>', width: 80, cellRenderer: gridCommands},
+    {headerName: '<%= gettext("Status") %>', field: 'status'},
+    {headerName: '<%= gettext("Description") %>', field: 'description'},
+    {headerName: '<%= gettext("Due date") %>', field: 'due_date'},
+    {headerName: '<%= gettext("Notes") %>', field: 'notes'},
+  ];
+
+  function gridCommands(params) {
+    return '<div class="center">'
+      + '<a type="button" class="btn btn-xs btn-default"  href="<%= alert_path(@conn, :index) %>/' + params.data.id + '" title="<%= gettext("Show") %>"><span class="zmdi zmdi-eye"></span></a>'
+      + '<a type="button" class="btn btn-xs btn-default"  href="<%= alert_path(@conn, :index) %>/' + params.data.id + '/edit" title="<%= gettext("Edit") %>"><span class="zmdi zmdi-edit"></span></a>'
+      + '<a type="button" class="btn btn-xs btn-danger"   href="<%= alert_path(@conn, :index) %>/' + params.data.id + '/delete" title="<%= gettext("Delete") %>"><span class="zmdi zmdi-delete"></span></a>'
+      +'</div>';
+  }
+
+  var rowData = [
+    <%= for alert <- @alerts do %>
+    { id: '<%= alert.id %>', status: <%= alert.status %>, description: '<%= alert.description %>',
+      due_date: '<%= alert.due_date %>', notes: '<%= alert.notes %>' }
+    <% end %>
+  ];
+
+  var gridOptions = {
+      // note - we do not set 'virtualPaging' here, so the grid knows we are doing standard paging
+      //enableSorting: true,
+      enableFilter: true,
+      enableColResize: false,
+      columnDefs: columnDefs,
+      //showToolPanel: true,
+  };
+
+  function gridSizeToFit() {
+    gridDiv.style.setProperty("height", (window.innerHeight - 220)+"px")
+    grid.gridOptions.api.sizeColumnsToFit();
+  }
+
+  function sizeToFit() {
+      setTimeout(gridSizeToFit, 100);
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+      gridDiv = document.querySelector('#alert_grid');
+      gridOptions.rowData = rowData;
+      grid = new agGrid.Grid(gridDiv, gridOptions);
+      grid.gridOptions.api.sizeColumnsToFit();
+  });
+
+  window.addEventListener("resize", sizeToFit);
+
+})();
+</script>

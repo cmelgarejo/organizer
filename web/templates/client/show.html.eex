@@ -1,48 +1,124 @@
-<h2>Show client</h2>
+<h3>
+<button class="btn btn-primary" onclick="goBack();">
+  <i class="zmdi zmdi-arrow-left"></i>&nbsp;<%= gettext("Back") %>
+</button>
+&nbsp;  <%= gettext("Client Details")%>&nbsp;
+<a class="btn btn-default" href="<%= client_path(@conn, :edit, @client) %>">
+  <i class="zmdi zmdi-edit"></i>&nbsp;<%= gettext("Edit") %>
+</a>
+</h3>
 
-<ul>
+<table class="table table-condensed table-stripped">
+  <tbody>
+    <tr>
+      <td><strong><%= gettext("Name") %></strong></td>
+      <td><%= @client.name %></td>
+    </tr>
+    <tr>
+      <td><strong><%= gettext("Doc") %></strong></td>
+      <td><%= @client.doc %></td>
+    </tr>
+    <tr>
+      <td><strong><%= gettext("Fee Amount")%></strong></td>
+      <td><%= @client.fee_amount %></td>
+    </tr>
+    <tr>
+      <td><strong><%= gettext("Charge Date") %></strong></td>
+      <td>
+      <%= Organizer.Utilities.day_of_each_month(@client.charge_date.day) %>
+      </td>
+    </tr>
+    <tr>
+      <td><strong><%= gettext("Email") %></strong></td>
+      <td><%= @client.email %></td>
+    </tr>
+    <tr>
+      <td><strong><%= gettext("Phone") %></strong></td>
+      <td><%= @client.phone %></td>
+    </tr>
+    <tr>
+      <td><strong><%= gettext("Created") %></strong></td>
+      <td><%= @client.inserted_at %></td>
+    </tr>
+    <tr>
+      <td><strong><%= gettext("Updated") %></strong></td>
+      <td><%= @client.updated_at %></td>
+    </tr>
+  </tbody>
+</table>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @client.name %>
-  </li>
 
-  <li>
-    <strong>Doc:</strong>
-    <%= @client.doc %>
-  </li>
+<a href="<%= alert_path(@conn, :new) %>?client_id=<%= @client.id %>" class="btn btn-success btn-add">
+  <i class="zmdi zmdi-plus"></i>&nbsp;<%= gettext("Add new Alert") %>
+</a>
+<br><br><br>
+<div id="alert_grid" class="ag-grid ag-responsive ag-blue"></div>
 
-  <li>
-    <strong>Charge rate:</strong>
-    <%= @client.charge_rate %>
-  </li>
+<script>
+(function() {
+  var grid, gridDiv;
+  var columnDefs = [
+    {headerName: "<%= gettext("Commands") %>",                      width: 100, cellRenderer: setButtons,  suppressSizeToFit: true, suppressResize: true},
+    {headerName: "<%= gettext("Status") %>", field: "status",       width: 100, cellRenderer: setCheckbox, suppressSizeToFit: true, suppressResize: true},
+    {headerName: "<%= gettext("Due date") %>", field: "due_date",   width: 170,                            suppressSizeToFit: true, suppressResize: true},
+    {headerName: "<%= gettext("Description") %>", field: "description"},
+    {headerName: "<%= gettext("Notes") %>", field: "notes"},
+  ];
 
-  <li>
-    <strong>Charge date:</strong>
-    <%= @client.charge_date %>
-  </li>
+  function setNewValue(params) {
+    return returnTheSame(params);
+  }
 
-  <li>
-    <strong>Email:</strong>
-    <%= @client.email %>
-  </li>
+  function setLink(params) {
+    return linkTo('<%= client_path(@conn, :index) %>/'
+      + params.data.client_id, params.data.client);
+  }
 
-  <li>
-    <strong>Phone:</strong>
-    <%= @client.phone %>
-  </li>
+  function setButtons(params) {
+   var buttons = [
+      {
+        icon: "edit", title: "<%= gettext("Edit") %>",
+        path: '<%= alert_path(@conn, :index) %>/' + params.data.id + '/edit'
+      },
+      {
+        icon: "delete", title: "<%= gettext("Delete Alert") %>",
+        path: '<%= alert_path(@conn, :index) %>/' + params.data.id + '/delete',
+        class: 'danger', method: "delete"
+      },
+    ];
+    return gridCommands(buttons);
+  }
 
-  <li>
-    <strong>Created:</strong>
-    <%= @client.inserted_at %>
-  </li>
+  function setCheckbox(params) {
+    var method = "GET", path = "/alerts/update_status/"
+      + params.data.id + "?status=true&_csrf_token=<%= get_csrf_token %>";
+    return cellCheckbox(params, method, path);
+  }
 
-  <li>
-    <strong>Updated:</strong>
-    <%= @client.updated_at %>
-  </li>
+  var rowData = [
+    <%= for alert <- @alerts do %>
+    { id: '<%= alert.id %>', status: <%= alert.status %>, description: '<%= String.replace(alert.description, "\r\n", "\\n") %>',
+      due_date: '<%= alert.due_date %>', notes: '<%= String.replace(alert.notes, "\r\n", "\\n") %>' },
+    <% end %>
+  ];
 
-</ul>
+  var gridOptions = {
+      enableSorting: true,
+      rowSelection: 'single',
+      enableFilter: true,
+      enableColResize: true,
+      columnDefs: columnDefs,
+      localeText: gridLocaleText
+  };
 
-<%= link "Edit", to: client_path(@conn, :edit, @client) %>
-<%= link "Back", to: client_path(@conn, :index) %>
+  document.addEventListener('DOMContentLoaded', function() {
+    gridDiv = document.querySelector('#alert_grid');
+    gridOptions.rowData = rowData;
+    grid = new agGrid.Grid(gridDiv, gridOptions);
+    sizeToFit(grid, gridDiv, 560);
+    window.addEventListener("resize", sizeToFit(grid, gridDiv, 560));
+  });
+
+})();
+
+</script>

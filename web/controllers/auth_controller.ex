@@ -1,12 +1,39 @@
 defmodule Organizer.AuthController do
   use Organizer.Web, :controller
 
+  def options(), do: Application.get_env(:organizer, Organizer.AuthController)
   @doc """
   This action is reached via `/auth/:provider` and redirects to the OAuth2 provider
   based on the chosen strategy.
   """
   def index(conn, %{"provider" => provider}) do
-    redirect conn, external: authorize_url!(provider)
+    if !(options[:single_user]) do
+      redirect conn, external: authorize_url!(provider)
+    else
+      oauth_data = %{name: options[:user].name, doc: options[:user].doc, password: options[:user].password,
+      dob: options[:user].birthday, gender: options[:user].gender, image_url: options[:user].image_url,
+      email: options[:user].email, timezone: options[:user].timezone, locale: options[:user].locale,
+      demo: options[:user].demo, active: options[:user].active, xtra_info: options[:user].xtra_info}
+
+      user = Repo.get_by(Organizer.User, email: oauth_data.email)
+
+      if (user == nil) do
+        user = Organizer.User.changeset(%Organizer.User{}, oauth_data)
+
+        case Repo.insert(user) do
+          {:ok, _user} ->
+            #READ BACK FROM DB WITH EMAIL
+            user = Repo.get_by(Organizer.User, email: oauth_data.email)
+            start_session(conn, Map.merge(oauth_data, %{id: user.id}), %{access_token: user.id})
+          {:error, _changeset} ->
+            conn
+            |> put_flash(:error, gettext("User cannot be created.") )
+            |> redirect(to: register_path(conn, :index))
+        end
+      else
+        start_session(conn, Map.merge(oauth_data, %{id: user.id}), %{access_token: user.id})
+      end
+    end
   end
 
   @doc """
@@ -61,7 +88,7 @@ defmodule Organizer.AuthController do
     conn
     |> put_session(:session, user |> Map.take([:id, :name, :doc, :password, :dob, :gender, :image_url, :email, :timezone, :locale, :demo, :active, :xtra_info]))
     |> put_session(:access_token, token.access_token)
-    |> redirect(to: "/clients")
+    |> redirect(to: dashboard_path(conn, :index))
 
   defp authorize_url!("github"),   do: GitHub.authorize_url!
   defp authorize_url!("google"),   do: Google.authorize_url!(scope: "https://www.googleapis.com/auth/userinfo.email")
@@ -111,9 +138,9 @@ defmodule Organizer.AuthController do
       {:error, %HTTPoison.Error{reason: reason}} ->
         "error:" <> to_string(reason)
     end
-    %{name: user["name"], doc: user["id"], password: user["email"],
+    %{name: user["name"], doc: nil, password: user["email"],
     dob: user["birthday"], gender: user["gender"], image_url: avatar,
     email: user["email"], timezone: user["timezone"], locale: user["locale"],
-    demo: true, active: true, xtra_info: Map.merge(user, %{access_token: token.access_token})}
+    demo: true, active: true, xtra_info: Map.merge(user, %{fb_id: user["id"], access_token: token.access_token})}
   end
 end

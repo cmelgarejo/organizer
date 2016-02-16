@@ -4,7 +4,6 @@ exports.config = {
       joinTo: "js/app.js",
       order: {
         before: [
-          "bower_components/jquery/dist/jquery.min.js",
           "bower_components/bootstrap/dist/js/bootstrap.min.js"
         ]
       }

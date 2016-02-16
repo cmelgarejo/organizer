@@ -6,99 +6,342 @@ msgid ""
 msgstr ""
 "Language: es\n"
 
-#: web/templates/page/index.html.eex:3
+#: web/templates/dashboard/index.html.eex:3
 msgid "Welcome to %{name}"
-msgstr "Hola, has llegado a %{name}"
+msgstr "Le damos la bienvenida a: %{name}!"
 
-#: web/templates/client/index.html.eex:1 web/templates/page/index.html.eex:8
+#: web/templates/client/index.html.eex:7 web/templates/layout/app.html.eex:55
 msgid "Clients"
 msgstr "Clientes"
 
-#: web/controllers/alert_controller.ex:25
+#: web/controllers/alert_controller.ex:24
 msgid "Alert created successfully."
-msgstr ""
+msgstr "Alerta creada exitosamente"
 
-#: web/controllers/alert_controller.ex:65
+#: web/controllers/alert_controller.ex:79
 msgid "Alert deleted successfully."
-msgstr ""
+msgstr "Alerta eliminada exitosamente"
 
-#: web/controllers/alert_controller.ex:50
+#: web/controllers/alert_controller.ex:49
 msgid "Alert updated successfully."
-msgstr ""
+msgstr "Alerta actualizada exitosamente"
 
-#: web/templates/alert/edit.html.eex:6
+#: web/templates/alert/edit.html.eex:3 web/templates/alert/new.html.eex:3
+#: web/templates/alert/show.html.eex:3 web/templates/client/edit.html.eex:3
+#: web/templates/client/new.html.eex:3 web/templates/client/show.html.eex:3
 msgid "Back"
-msgstr ""
-
-#: web/templates/alert/edit.html.eex:1
-msgid "Edit alerts"
-msgstr ""
+msgstr "Atrás"
 
 #: web/templates/alert/form.html.eex:4 web/templates/client/form.html.eex:4
 msgid "Oops, something went wrong! Please check the errors below."
-msgstr ""
+msgstr "Algo malo ha ocurrido, por favor revisa los errores mencionados más abajo."
 
-#: web/templates/alert/form.html.eex:39
+#: web/templates/alert/form.html.eex:40 web/templates/client/form.html.eex:50
 msgid "Submit"
-msgstr ""
+msgstr "Guardar"
 
-#: web/templates/layout/app.html.eex:27 web/templates/page/index.html.eex:4
+#: web/templates/dashboard/index.html.eex:4 web/templates/layout/app.html.eex:64
 msgid "Register now!"
-msgstr ""
+msgstr "Regístrate ahora!"
 
-#: web/templates/register/index.html.eex:3
-#: web/templates/session/index.html.eex:3
+#: web/templates/register/index.html.eex:4
+#: web/templates/session/index.html.eex:8
 msgid "Sign in with Facebook"
-msgstr "Regístrate con Facebook"
+msgstr "Ingresa con tu cuenta de Facebook"
 
 #: web/controllers/user_controller.ex:25
 msgid "User created successfully."
-msgstr ""
+msgstr "Usuario creado exitosamente"
 
 #: web/controllers/user_controller.ex:66
 msgid "User deleted successfully."
-msgstr ""
+msgstr "Usuario eliminado exitosamente"
 
 #: web/controllers/user_controller.ex:51
 msgid "User updated successfully."
-msgstr ""
+msgstr "Usuario actualizado exitosamente"
 
-#: web/templates/layout/app.html.eex:25
+#: web/templates/layout/app.html.eex:60
 msgid "Close session"
+msgstr "Cerrar sesión"
+
+#: web/controllers/dashboard_controller.ex:15
+msgid "An error has ocurred, please contact with the system administrator"
 msgstr ""
 
-#: web/controllers/client_controller.ex:15
-msgid "ERROR."
-msgstr ""
-
-#: web/templates/client/index.html.eex:79
+#: web/templates/layout/app.html.eex:22
 msgid "Loading..."
-msgstr ""
+msgstr "Cargando..."
 
-#: web/templates/client/index.html.eex:35 web/templates/client/index.html.eex:43
-msgid "New client"
-msgstr ""
-
-#: web/templates/client/index.html.eex:70
+#: web/templates/layout/app.html.eex:13
 msgid "No Rows To Show"
 msgstr "No hay datos para mostrar"
 
-#: web/templates/client/index.html.eex:71
+#: web/templates/layout/app.html.eex:14
 msgid "Page"
 msgstr "Página"
 
 #: web/templates/user/show.html.eex:1
 msgid "Profile"
-msgstr ""
+msgstr "Perfil"
 
-#: web/controllers/auth_controller.ex:38 web/controllers/auth_controller.ex:56
+#: web/controllers/auth_controller.ex:30 web/controllers/auth_controller.ex:65
+#: web/controllers/auth_controller.ex:83
 msgid "User cannot be created."
-msgstr ""
+msgstr "El Usuario no pudo ser creado"
 
 #: web/controllers/session_controller.ex:14
 msgid "You have been logged out!"
-msgstr ""
+msgstr "Has cerrado la sesión"
 
 #: lib/organizer/plug/authenticate.ex:15
 msgid "You need to be signed in to view this page"
+msgstr "Necesitas iniciar sesión para ver esta página"
+
+#: web/templates/client/form.html.eex:29 web/templates/client/index.html.eex:20
+#: web/templates/client/show.html.eex:26
+msgid "Charge Date"
+msgstr "Fecha de cobro"
+
+#: web/templates/client/form.html.eex:23 web/templates/client/index.html.eex:19
+#: web/templates/client/show.html.eex:22
+msgid "Fee Amount"
+msgstr "Monto a cobrar"
+
+#: web/templates/client/index.html.eex:16 web/templates/client/show.html.eex:61
+#: web/templates/dashboard/index.html.eex:15
+msgid "Commands"
+msgstr "Comandos"
+
+#: web/templates/alert/show.html.eex:7 web/templates/client/show.html.eex:7
+#: web/templates/client/show.html.eex:80
+#: web/templates/dashboard/index.html.eex:37
+msgid "Edit"
+msgstr "Editar"
+
+#: web/templates/client/form.html.eex:38 web/templates/client/index.html.eex:21
+#: web/templates/client/show.html.eex:32
+#: web/templates/dashboard/index.html.eex:20
+msgid "Email"
 msgstr ""
+
+#: web/templates/client/form.html.eex:11 web/templates/client/index.html.eex:17
+#: web/templates/client/show.html.eex:14
+msgid "Name"
+msgstr "Nombre"
+
+#: web/templates/layout/app.html.eex:49
+msgid "Organizer"
+msgstr "Organizer"
+
+#: web/templates/client/form.html.eex:44 web/templates/client/index.html.eex:22
+#: web/templates/client/show.html.eex:36
+#: web/templates/dashboard/index.html.eex:19
+msgid "Phone"
+msgstr "Teléfono"
+
+#: web/templates/client/show.html.eex:5
+msgid "Client Details"
+msgstr "Detalles del Cliente"
+
+#: web/templates/alert/form.html.eex:11 web/templates/alert/show.html.eex:14
+#: web/templates/client/show.html.eex:64
+#: web/templates/dashboard/index.html.eex:21
+msgid "Description"
+msgstr "Descripción"
+
+#: web/templates/alert/form.html.eex:24 web/templates/alert/show.html.eex:18
+#: web/templates/client/show.html.eex:63
+#: web/templates/dashboard/index.html.eex:17
+msgid "Due date"
+msgstr "Fecha/hora de alerta"
+
+#: web/templates/client/index.html.eex:18
+msgid "ID"
+msgstr "Documento"
+
+#: web/templates/alert/form.html.eex:18 web/templates/alert/show.html.eex:22
+#: web/templates/client/show.html.eex:65
+#: web/templates/dashboard/index.html.eex:22
+msgid "Notes"
+msgstr "Notas"
+
+#: web/templates/client/show.html.eex:62
+#: web/templates/dashboard/index.html.eex:16
+msgid "Status"
+msgstr "Atendida"
+
+#: web/templates/dashboard/index.html.eex:18
+msgid "Client"
+msgstr "Cliente"
+
+#: web/templates/client/index.html.eex:41 web/templates/client/show.html.eex:84
+#: web/templates/dashboard/index.html.eex:41
+msgid "Delete Alert"
+msgstr "Eliminar alerta"
+
+#: web/templates/client/index.html.eex:37
+msgid "Show Alert"
+msgstr "Ver alerta"
+
+#: web/templates/register/index.html.eex:8
+#: web/templates/session/index.html.eex:3
+msgid "Sign In"
+msgstr "Inicia tu sesión"
+
+#: web/controllers/client_controller.ex:32
+msgid "Client created successfully."
+msgstr "Cliente creado exitosamente"
+
+#: web/controllers/client_controller.ex:73
+msgid "Client deleted successfully."
+msgstr "Cliente eliminado exitosamente"
+
+#: web/controllers/client_controller.ex:58
+msgid "Client updated successfully."
+msgstr "Cliente actualizado exitosamente"
+
+#: web/templates/alert/form.html.eex:34 web/templates/alert/show.html.eex:26
+#: web/templates/client/show.html.eex:40
+msgid "Created"
+msgstr "Fecha de Creación"
+
+#: web/templates/client/show.html.eex:18
+msgid "Doc"
+msgstr "Número de Documento"
+
+#: web/templates/client/show.html.eex:44
+msgid "Updated"
+msgstr "Fecha de Actualización"
+
+#: web/templates/client/show.html.eex:52
+msgid "Add new Alert"
+msgstr "Agregar nueva Alerta"
+
+#: web/templates/alert/show.html.eex:5
+msgid "Alert Details"
+msgstr "Detalles de la Alerta"
+
+#: web/templates/alert/edit.html.eex:5
+msgid "Edit Alert"
+msgstr "Editar alerta"
+
+#: web/templates/dashboard/index.html.eex:7
+msgid "My Alerts"
+msgstr "Mis Alertas"
+
+#: web/templates/alert/new.html.eex:5
+msgid "New alert"
+msgstr "Nueva Alerta"
+
+#: web/templates/layout/app.html.eex:25
+msgid "*Blank*"
+msgstr "*Vacío*"
+
+#: web/templates/layout/app.html.eex:27
+msgid "Apply Filter..."
+msgstr "Aplicar Filtro..."
+
+#: web/templates/layout/app.html.eex:34
+msgid "Columns"
+msgstr "Columnas"
+
+#: web/templates/layout/app.html.eex:31
+msgid "Contains"
+msgstr "Contiene"
+
+#: web/templates/layout/app.html.eex:33
+msgid "Ends with"
+msgstr "Termina con"
+
+#: web/templates/layout/app.html.eex:28
+msgid "Equals"
+msgstr "Igual a"
+
+#: web/templates/layout/app.html.eex:26
+msgid "Filter..."
+msgstr "Filtro..."
+
+#: web/templates/layout/app.html.eex:20
+msgid "First"
+msgstr "Primero"
+
+#: web/templates/layout/app.html.eex:30
+msgid "Greater Than"
+msgstr "Mayor que"
+
+#: web/templates/layout/app.html.eex:19
+msgid "Last"
+msgstr "Último"
+
+#: web/templates/layout/app.html.eex:29
+msgid "Less Than"
+msgstr "Menor que"
+
+#: web/templates/layout/app.html.eex:15
+msgid "More"
+msgstr "Más"
+
+#: web/templates/layout/app.html.eex:18
+msgid "Next"
+msgstr "Siguiente"
+
+#: web/templates/layout/app.html.eex:17
+msgid "Of"
+msgstr "de"
+
+#: web/templates/layout/app.html.eex:35
+msgid "Pivot Cols"
+msgstr "Columnas pivotales"
+
+#: web/templates/layout/app.html.eex:36 web/templates/layout/app.html.eex:38
+msgid "Please drag cols to here"
+msgstr "Por favor, arrastre columnas aquí"
+
+#: web/templates/layout/app.html.eex:21
+msgid "Previous"
+msgstr "Anterior"
+
+#: web/templates/layout/app.html.eex:24
+msgid "Search..."
+msgstr "Buscar..."
+
+#: web/templates/layout/app.html.eex:23
+msgid "Select All"
+msgstr "Seleccionar Todo"
+
+#: web/templates/layout/app.html.eex:32
+msgid "Starts with"
+msgstr "Comienza con"
+
+#: web/templates/layout/app.html.eex:16
+msgid "To"
+msgstr "A"
+
+#: web/templates/layout/app.html.eex:37
+msgid "Value Cols"
+msgstr "Columnas de Valor"
+
+#: web/templates/client/new.html.eex:5
+msgid "New Client"
+msgstr "Nuevo Cliente"
+
+#: web/templates/client/form.html.eex:17
+msgid "Document"
+msgstr "Documento"
+
+#: web/templates/client/edit.html.eex:5
+msgid "Edit Client"
+msgstr "Editar Cliente"
+
+#: web/templates/layout/app.html.eex:54
+msgid "Dashboard"
+msgstr ""
+
+#: lib/utlities.ex:6 web/templates/client/form.html.eex:31
+msgid " of each month"
+msgstr " de cada mes"
+
+#: lib/utlities.ex:6
+msgid "The "
+msgstr "El "

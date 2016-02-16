@@ -20,8 +20,8 @@ defmodule Organizer.User do
     timestamps
   end
 
-  @required_fields ~w(email password name doc demo active)
-  @optional_fields ~w(dob gender image_url email timezone locale xtra_info)
+  @required_fields ~w(email password name demo active)
+  @optional_fields ~w(doc dob gender image_url email timezone locale xtra_info)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

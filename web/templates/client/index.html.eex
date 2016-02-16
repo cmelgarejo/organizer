@@ -1,123 +1,82 @@
-<h2><%= gettext("Clients")%></h2>
+<div class="btn-float-div">
+  <a href="<%= client_path(@conn, :new) %>" class="btn btn-success btn-float">
+    <i class="zmdi zmdi-plus"></i>
+  </a>
+</div>
 
-<!-- <table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Doc</th>
-      <th>Charge rate</th>
-      <th>Charge date</th>
-      <th>Email</th>
-      <th>Phone</th>
-
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for client <- @clients do %>
-    <tr>
-      <td><%= client.name %></td>
-      <td><%= client.doc %></td>
-      <td><%= client.charge_rate %></td>
-      <td><%= client.charge_date %></td>
-      <td><%= client.email %></td>
-      <td><%= client.phone %></td>
-
-      <td class="text-right">
-        <%= link "Show", to: client_path(@conn, :show, client), class: "btn btn-default btn-xs" %>
-        <%= link "Edit", to: client_path(@conn, :edit, client), class: "btn btn-default btn-xs" %>
-        <%= link "Delete", to: client_path(@conn, :delete, client), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table> -->
-<%= link gettext("New client"), to: client_path(@conn, :new) %>
+<h2><%= gettext("Clients")%></h2><br/>
 
 <div id="client_grid" class="ag-grid ag-responsive ag-blue"></div>
 
 <script>
-var grid, gridDiv;
 (function() {
+  var grid, gridDiv;
+
   var columnDefs = [
-      {headerName: 'Commands', width: 100, template: '<%= link gettext("New client"), to: client_path(@conn, :new) %> data.id', valueGetter: 'data.id'},
-    {headerName: 'Name', field: 'name'},
-    {headerName: 'Name', field: 'name'},
-    {headerName: 'Document', field: 'doc'},
-    {headerName: 'Charge Rate', field: 'charge_rate'},
-    {headerName: 'Charge Date', field: 'charge_date'},
-    {headerName: 'Email', field: 'email'},
-    {headerName: 'Phone', field: 'phone'},
+    {headerName: '<%= gettext("Commands") %>', width: 100, cellRenderer: setButtons,  suppressSizeToFit: true, suppressResize: true},
+    {headerName: '<%= gettext("Name") %>', field: "name", cellRenderer: setLink, suppressSizeToFit: true},
+    {headerName: '<%= gettext("ID") %>', field: 'doc'},
+    {headerName: '<%= gettext("Fee Amount") %>', field: 'fee_amount'},
+    {headerName: '<%= gettext("Charge Date") %>', field: 'charge_date'},
+    {headerName: '<%= gettext("Email") %>', field: 'email', editable: true, newValueHandler: setNewValue},
+    {headerName: '<%= gettext("Phone") %>', field: 'phone', editable: true, newValueHandler: setNewValue},
   ];
+
+  function setNewValue(params) {
+    return returnTheSame(params);
+  }
+
+  function setLink(params) {
+    return linkTo('<%= client_path(@conn, :index) %>/'
+      + params.data.id, params.data.name);
+  }
+
+  function setButtons(params) {
+   var buttons = [
+      {
+        icon: "eye", title: "<%= gettext("Show Alert") %>",
+        path: '<%= client_path(@conn, :index) %>/' + params.data.id
+      },
+      {
+        icon: "delete", title: "<%= gettext("Delete Alert") %>",
+        path: '<%= client_path(@conn, :index) %>/' + params.data.id + '/delete',
+        class: 'danger', method: "delete"
+      },
+    ];
+    return gridCommands(buttons);
+  }
+
+  function setCheckbox(params) {
+    return cellCheckbox(params, null);
+  }
 
   var rowData = [
     <%= for client <- @clients do %>
     { id: '<%= client.id %>', name: '<%= client.name %>', doc: '<%= client.doc %>',
-      charge_rate: '<%= client.charge_rate %>', charge_date: '<%= client.charge_date %>',
+      fee_amount: '<%= client.fee_amount %>',
+      charge_date: '<%= Organizer.Utilities.day_of_each_month(client.charge_date.day) %>',
       email: '<%= client.email %>', phone: '<%= client.phone %>'},
     <% end %>
   ];
 
   var gridOptions = {
-      // note - we do not set 'virtualPaging' here, so the grid knows we are doing standard paging
-      //enableSorting: true,
+      enableSorting: true,
+      rowSelection: 'single',
       enableFilter: true,
-      enableColResize: false,
+      enableColResize: true,
       columnDefs: columnDefs,
-      //showToolPanel: true,
-      localeText: {
-          // for filter panel
-          noRowsToShow: '<%= gettext("No Rows To Show")%>',
-          page: '<%= gettext("Page") %>',
-          more: 'More',
-          to: 'To',
-          of: 'Of',
-          next: 'Next',
-          last: 'st',
-          first: 'First',
-          previous: 'Previous',
-          loadingOoo: '<%= gettext("Loading...")%>',
-          // for set filter
-          selectAll: 'Select All',
-          searchOoo: 'Search...',
-          blanks: '*Blank*',
-          // for number filter and string filter
-          filterOoo: 'Filter...',
-          applyFilter: 'Apply Filter...',
-          // for number filter
-          equals: 'Equals',
-          lessThan: 'Less Than',
-          greaterThan: 'Greater Than',
-          // for text filter
-          contains: 'Contains',
-          startsWith: 'Starts with',
-          endsWith: 'Ends with',
-          // tool panel
-          columns: 'Columns',
-          rowGroupColumns: 'Pivot Cols',
-          rowGroupColumnsEmptyMessage: ' please drag cols to here',
-          valueColumns: 'Value Cols',
-          valueColumnsEmptyMessage: ' please drag cols to here'
-      }
+      localeText: gridLocaleText
   };
 
-  function gridSizeToFit() {
-    gridDiv.style.setProperty("height", (window.innerHeight - 220)+"px")
-    grid.gridOptions.api.sizeColumnsToFit();
-  }
-
-  function sizeToFit() {
-      setTimeout(gridSizeToFit, 100);
-  }
-
   document.addEventListener('DOMContentLoaded', function() {
-      gridDiv = document.querySelector('#client_grid');
-      gridOptions.rowData = rowData;
-      grid = new ag.grid.Grid(gridDiv, gridOptions);
-      grid.gridOptions.api.sizeColumnsToFit();
+    gridDiv = document.querySelector('#client_grid');
+    gridOptions.rowData = rowData;
+    grid = new agGrid.Grid(gridDiv, gridOptions);
+    sizeToFit(grid, gridDiv, 220);
+    window.addEventListener("resize", sizeToFit(grid, gridDiv, 220));
+    setTimeout(killAlert, 10000);
   });
 
-  window.addEventListener("resize", sizeToFit);
-
 })();
+
 </script>

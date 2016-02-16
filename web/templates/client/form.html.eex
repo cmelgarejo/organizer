@@ -8,42 +8,45 @@
   <%= hidden_input f, :user_id, class: "form-control" %>
 
   <div class="form-group">
-    <%= label f, :name, class: "control-label" %>
+    <%= label f, :name, gettext("Name"), class: "control-label" %>
     <%= text_input f, :name, class: "form-control" %>
     <%= error_tag f, :name %>
   </div>
 
   <div class="form-group">
-    <%= label f, :doc, class: "control-label" %>
+    <%= label f, :doc, gettext("Document"), class: "control-label" %>
     <%= text_input f, :doc, class: "form-control" %>
     <%= error_tag f, :doc %>
   </div>
 
   <div class="form-group">
-    <%= label f, :charge_rate, class: "control-label" %>
-    <%= number_input f, :charge_rate, step: "any", class: "form-control" %>
-    <%= error_tag f, :charge_rate %>
+    <%= label f, :fee_amount, gettext("Fee Amount"), class: "control-label" %>
+    <%= number_input f, :fee_amount, step: "any", class: "form-control" %>
+    <%= error_tag f, :fee_amount %>
   </div>
 
   <div class="form-group">
-    <%= label f, :charge_date, class: "control-label" %>
-    <%= date_select f, :charge_date, class: "form-control" %>
+    <%= label f, :charge_date, gettext("Charge Date"), class: "control-label" %>
+    <%= date_select f, :charge_date, default: Ecto.DateTime.cast!(:calendar.local_time), builder: fn b -> %>
+    <%= b.(:day, []) %> <%= gettext(" of each month") %>
+    <%= b.(:month, [options: Organizer.Utilities.l10n_select_date_months, class: "hidden"]) %><%= b.(:year, [class: "hidden"]) %>
+    <% end %>
     <%= error_tag f, :charge_date %>
   </div>
 
   <div class="form-group">
-    <%= label f, :email, class: "control-label" %>
-    <%= text_input f, :email, class: "form-control" %>
+    <%= label f, :email, gettext("Email"), class: "control-label" %>
+    <%= email_input f, :email, class: "form-control" %>
     <%= error_tag f, :email %>
   </div>
 
   <div class="form-group">
-    <%= label f, :phone, class: "control-label" %>
-    <%= text_input f, :phone, class: "form-control" %>
+    <%= label f, :phone, gettext("Phone"), class: "control-label" %>
+    <%= telephone_input f, :phone, class: "form-control" %>
     <%= error_tag f, :phone %>
   </div>
 
   <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
+    <%= submit gettext("Submit"), class: "btn btn-success" %>
   </div>
 <% end %>

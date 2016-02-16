@@ -8,6 +8,36 @@
     <meta name="author" content="">
     <title>Organizer</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <script>
+    var gridLocaleText = {
+      noRowsToShow: '<%= gettext("No Rows To Show") %>',
+      page: '<%= gettext("Page") %>',
+      more: '<%= gettext("More") %>',
+      to: '<%= gettext("To") %>',
+      of: '<%= gettext("Of") %>',
+      next: '<%= gettext("Next") %>',
+      last: '<%= gettext("Last") %>',
+      first: '<%= gettext("First") %>',
+      previous: '<%= gettext("Previous") %>',
+      loadingOoo: '<%= gettext("Loading...") %>',
+      selectAll: '<%= gettext("Select All") %>',
+      searchOoo: '<%= gettext("Search...") %>',
+      blanks: '<%= gettext("*Blank*") %>',
+      filterOoo: '<%= gettext("Filter...") %>',
+      applyFilter: '<%= gettext("Apply Filter...") %>',
+      equals: '<%= gettext("Equals") %>',
+      lessThan: '<%= gettext("Less Than") %>',
+      greaterThan: '<%= gettext("Greater Than") %>',
+      contains: '<%= gettext("Contains") %>',
+      startsWith: '<%= gettext("Starts with") %>',
+      endsWith: '<%= gettext("Ends with") %>',
+      columns: '<%= gettext("Columns") %>',
+      rowGroupColumns: '<%= gettext("Pivot Cols") %>',
+      rowGroupColumnsEmptyMessage: '<%= gettext("Please drag cols to here") %>',
+      valueColumns: '<%= gettext("Value Cols") %>',
+      valueColumnsEmptyMessage: '<%= gettext("Please drag cols to here") %>'
+    };
+    </script>
   </head>
 
   <body>
@@ -16,15 +46,22 @@
         <nav role="navigation">
           <ul class="nav nav-pills pull-left">
             <li style="font-family:PT Sans Narrow; font-size:24px" class="pull-left">
-              Organizer
+              <%= link gettext("Organizer"), to: dashboard_path(@conn, :index), style: "padding: 1px" %>
             </li>
           </ul>
           <ul class="nav nav-pills pull-right">
           <%= if @session do %>
-            <li><%= link @session.name, to: user_path(@conn, :show, %{id: @session.id}), class: "btn btn-info btn-xs" %></li>
-            <li><%= link gettext("Close session"), to: session_path(@conn, :logout), class: "btn btn-danger btn-xs" %></li>
+            <li><%= link gettext("Dashboard"), to: dashboard_path(@conn, :index), class: "btn btn-info btn-lg" %></li>
+            <li><%= link gettext("Clients"), to: client_path(@conn, :index), class: "btn btn-info btn-lg" %></li>
+            <li><%= link @session.name, to: user_path(@conn, :show, %{id: @session.id}), class: "btn btn-default btn-lg" %></li>
+            <li>
+              <a href="<%= session_path(@conn, :logout) %>" class="btn btn-danger btn-lg">
+                <i class="zmdi zmdi-close"></i>
+                <%= gettext("Close session") %>
+              </a>
+            </li>
           <% else %>
-            <li><a href="register"><%= gettext("Register now!")%></a></li>
+            <li><a href="register"><%= gettext("Register now!") %></a></li>
           <% end %>
           </ul>
         </nav>

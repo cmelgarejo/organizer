@@ -30,7 +30,7 @@ defmodule Organizer.Repo.Migrations.CreateClient do
       add :user_id, references(:users, type: :binary_id, on_delete: :delete_all), null: false
       add :name, :string, null: false
       add :doc, :string, null: false
-      add :charge_rate, :decimal
+      add :fee_amount, :decimal
       add :charge_date, :date
       add :email, :string
       add :phone, :string
@@ -44,6 +44,7 @@ defmodule Organizer.Repo.Migrations.CreateClient do
       add :id, :binary_id, primary_key: true
       add :client_id, references(:clients, type: :binary_id, on_delete: :delete_all), null: false
       add :description, :text
+      add :recurrent, :boolean, default: false
       add :due_date, :datetime
       add :notes, :text
       add :status, :boolean, default: false

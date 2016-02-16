@@ -17,21 +17,20 @@ defmodule Organizer.Router do
   scope "/", Organizer do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get "/", DashboardController, :index
+    get "/data", DashboardController, :grid_data
 
     get "/register", RegisterController, :index
     get "/profile",  UserController, :show
 
     resources "/clients", ClientController
+
+    get "/alerts/update_status/:id", AlertController, :update_status
+    get "/alerts/:id/delete", AlertController, :delete
+    put "/alerts/update_status/:id", AlertController, :update_status
+
     resources "/alerts", AlertController
-    # get    "/clients/:client_id/alerts",          AlertController, :index
-    # get    "/clients/:client_id/alerts/edit/:id", AlertController, :edit
-    # get    "/clients/:client_id/alerts/new",      AlertController, :new
-    # get    "/clients/:client_id/alerts/:id",      AlertController, :show
-    # post   "/clients/:client_id/alerts",          AlertController, :create
-    # patch  "/clients/:client_id/alerts/:id",      AlertController, :update
-    # put    "/clients/:client_id/alerts/:id",      AlertController, :update
-    # delete "/clients/:client_id/alerts/:id",      AlertController, :delete
+    resources "/users", UserController
   end
 
   scope "/auth", Organizer do

@@ -1,6 +1,9 @@
-<h2>Edit client</h2>
+<h2>
+<button class="btn btn-primary" onclick="goBack();">
+  <i class="zmdi zmdi-arrow-left"></i>&nbsp;<%= gettext("Back") %>
+</button>
+&nbsp; <%= gettext("Edit Client")%> &nbsp;
+</h2>
 
 <%= render "form.html", changeset: @changeset,
                         action: client_path(@conn, :update, @client) %>
-
-<%= link "Back", to: client_path(@conn, :index) %>

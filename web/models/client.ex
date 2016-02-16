@@ -7,18 +7,18 @@ defmodule Organizer.Client do
   schema "clients" do
     field :name, :string
     field :doc, :string
-    field :charge_rate, :decimal
+    field :fee_amount, :decimal
     field :charge_date, Ecto.Date
     field :email, :string
     field :phone, :string
 
     belongs_to :user, Organizer.User
-    has_many :alert, Organizer.Alert, on_delete: :delete_all
+    has_many :alerts, Organizer.Alert, on_delete: :delete_all
     timestamps
   end
 
-  @required_fields ~w(name doc user_id)
-  @optional_fields ~w(charge_rate email phone)
+  @required_fields ~w(name doc user_id charge_date fee_amount)
+  @optional_fields ~w(email phone)
 
   @doc """
   Creates a changeset based on the `model` and `params`.

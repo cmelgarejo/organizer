@@ -14,7 +14,7 @@ defmodule Organizer.Alert do
     timestamps
   end
 
-  @required_fields ~w(description due_date )
+  @required_fields ~w(description due_date)
   @optional_fields ~w(notes status client_id)
 
   @doc """
