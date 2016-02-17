@@ -6,37 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="theme-color" content="#5b9bd5">
+    <meta name="msapplication-navbutton-color" content="#5b9bd5">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#5b9bd5">
     <title>Organizer</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
     <script>
-    var gridLocaleText = {
-      noRowsToShow: '<%= gettext("No Rows To Show") %>',
-      page: '<%= gettext("Page") %>',
-      more: '<%= gettext("More") %>',
-      to: '<%= gettext("To") %>',
-      of: '<%= gettext("Of") %>',
-      next: '<%= gettext("Next") %>',
-      last: '<%= gettext("Last") %>',
-      first: '<%= gettext("First") %>',
-      previous: '<%= gettext("Previous") %>',
-      loadingOoo: '<%= gettext("Loading...") %>',
-      selectAll: '<%= gettext("Select All") %>',
-      searchOoo: '<%= gettext("Search...") %>',
-      blanks: '<%= gettext("*Blank*") %>',
-      filterOoo: '<%= gettext("Filter...") %>',
-      applyFilter: '<%= gettext("Apply Filter...") %>',
-      equals: '<%= gettext("Equals") %>',
-      lessThan: '<%= gettext("Less Than") %>',
-      greaterThan: '<%= gettext("Greater Than") %>',
-      contains: '<%= gettext("Contains") %>',
-      startsWith: '<%= gettext("Starts with") %>',
-      endsWith: '<%= gettext("Ends with") %>',
-      columns: '<%= gettext("Columns") %>',
-      rowGroupColumns: '<%= gettext("Pivot Cols") %>',
-      rowGroupColumnsEmptyMessage: '<%= gettext("Please drag cols to here") %>',
-      valueColumns: '<%= gettext("Value Cols") %>',
-      valueColumnsEmptyMessage: '<%= gettext("Please drag cols to here") %>'
-    };
+      var gridLocaleText = {
+        noRowsToShow: '<%= gettext("No Rows To Show") %>',
+        page: '<%= gettext("Page") %>',
+        more: '<%= gettext("More") %>',
+        to: '<%= gettext("To") %>',
+        of: '<%= gettext("Of") %>',
+        next: '<%= gettext("Next") %>',
+        last: '<%= gettext("Last") %>',
+        first: '<%= gettext("First") %>',
+        previous: '<%= gettext("Previous") %>',
+        loadingOoo: '<%= gettext("Loading...") %>',
+        selectAll: '<%= gettext("Select All") %>',
+        searchOoo: '<%= gettext("Search...") %>',
+        blanks: '<%= gettext("*Blank*") %>',
+        filterOoo: '<%= gettext("Filter...") %>',
+        applyFilter: '<%= gettext("Apply Filter...") %>',
+        equals: '<%= gettext("Equals") %>',
+        lessThan: '<%= gettext("Less Than") %>',
+        greaterThan: '<%= gettext("Greater Than") %>',
+        contains: '<%= gettext("Contains") %>',
+        startsWith: '<%= gettext("Starts with") %>',
+        endsWith: '<%= gettext("Ends with") %>',
+        columns: '<%= gettext("Columns") %>',
+        rowGroupColumns: '<%= gettext("Pivot Cols") %>',
+        rowGroupColumnsEmptyMessage: '<%= gettext("Please drag cols to here") %>',
+        valueColumns: '<%= gettext("Value Cols") %>',
+        valueColumnsEmptyMessage: '<%= gettext("Please drag cols to here") %>'
+      };
+      document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(killAlert, 10000);
+      });
     </script>
   </head>
 
@@ -68,8 +74,8 @@
         <span class="logo"></span>
       </header>
 
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+      <p class="alert alert-info alert-float" role="alert"><%= get_flash(@conn, :info) %></p>
+      <p class="alert alert-danger alert-float" role="alert"><%= get_flash(@conn, :error) %></p>
 
       <main role="main" id="_main">
         <%= render @view_module, @view_template, assigns %>

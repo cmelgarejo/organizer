@@ -128,6 +128,12 @@ a.btn-float.bgm-gray > i {
   color: #333;
 }
 
+.alert-float {
+  float: left !important;
+  position: absolute !important;
+  top: 1px !important;
+}
+
 div.btn-float-div {
   float:right !important;
   width: 50px;

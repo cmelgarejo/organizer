@@ -1,10 +1,15 @@
-<div class="btn-float-div">
+<!-- <div class="btn-float-div">
   <a href="<%= client_path(@conn, :new) %>" class="btn btn-success btn-float">
     <i class="zmdi zmdi-plus"></i>
   </a>
-</div>
+</div> -->
 
-<h2><%= gettext("Clients")%></h2><br/>
+<h2>
+  <%= gettext("Clients")%>&nbsp;
+  <a class="btn btn-success" href="<%= client_path(@conn, :new) %>">
+    <i class="zmdi zmdi-plus"></i>&nbsp;<%= gettext("New Client") %>
+  </a>
+</h2>
 
 <div id="client_grid" class="ag-grid ag-responsive ag-blue"></div>
 
@@ -40,7 +45,7 @@
       {
         icon: "delete", title: "<%= gettext("Delete Alert") %>",
         path: '<%= client_path(@conn, :index) %>/' + params.data.id + '/delete',
-        class: 'danger', method: "delete"
+        class: 'danger', method: "delete", onclick: "return confirmDelete()"
       },
     ];
     return gridCommands(buttons);
@@ -52,10 +57,10 @@
 
   var rowData = [
     <%= for client <- @clients do %>
-    { id: '<%= client.id %>', name: '<%= client.name %>', doc: '<%= client.doc %>',
+    { id: '<%= client.id %>', name: '<%= json_parse_text client.name %>', doc: '<%= json_parse_text client.doc %>',
       fee_amount: '<%= client.fee_amount %>',
-      charge_date: '<%= Organizer.Utilities.day_of_each_month(client.charge_date.day) %>',
-      email: '<%= client.email %>', phone: '<%= client.phone %>'},
+      charge_date: '<%= day_of_each_month(client.charge_date.day) %>',
+      email: '<%= json_parse_text client.email %>', phone: '<%= json_parse_text client.phone %>'},
     <% end %>
   ];
 
@@ -65,7 +70,10 @@
       enableFilter: true,
       enableColResize: true,
       columnDefs: columnDefs,
-      localeText: gridLocaleText
+      localeText: gridLocaleText,
+      onGridReady: function() {
+          gridOptions.api.sizeColumnsToFit();
+      }
   };
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -74,7 +82,6 @@
     grid = new agGrid.Grid(gridDiv, gridOptions);
     sizeToFit(grid, gridDiv, 220);
     window.addEventListener("resize", sizeToFit(grid, gridDiv, 220));
-    setTimeout(killAlert, 10000);
   });
 
 })();

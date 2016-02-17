@@ -1,6 +1,8 @@
 defmodule Organizer.Utilities do
-  import Plug.Conn, only: [get_session: 2, put_session: 3, assign: 3]
+  import Plug.Conn, only: [get_session: 2, put_session: 3]
   import Organizer.Gettext
+  alias Enum,   as: E
+  alias String, as: S
 
   def get_referer(conn) do
     (conn.req_headers |> Enum.into(%{}))["referer"]
@@ -14,6 +16,7 @@ defmodule Organizer.Utilities do
   def json_parse_text(text) do
     if text != nil do
       String.replace(text, "\r\n", "\\n")
+      |> String.replace("\\", "\\\\")
     else
       ""
     end
@@ -42,6 +45,55 @@ defmodule Organizer.Utilities do
       remove_list(List.delete(l, hd(ltr)), List.delete(ltr, hd(ltr))),
     else:
       l
+  end
+
+  @doc """
+    Converts a result from Ecto.Adapters.SQL.query to a map %{} (JSON parseable)
+
+    table: A Ecto table result (map) from Ecto.Adapters.SQL.query i.e:
+    %{columns: ["col1", "col2", "col3"], command: :select, num_rows: 1,
+      rows: [{1, "value1", nil}]}
+
+    filter:  Contains a list of keys that should be used and taken if present
+    (exclusively)
+    """
+  def table_to_map(table, filter \\ []) do
+    try do
+      if elem(table, 0) == :ok do
+        table = elem table, 1
+        if table.num_rows > 0 do
+          result = (for r <- table.rows, do:
+            E.zip((table.columns |> E.map(&(S.to_atom &1))), r) |> E.into(%{}))
+         { table.num_rows,
+           (if (!E.empty?filter), do:
+             (for m <- result, do: Map.take(m, filter)), else: result) }
+        else
+          { 0, [] }
+        end
+      else
+        error_logger "SQL Query failed", __ENV__, %{table: table}
+      end
+    rescue
+      e in _ ->
+        error_logger e, __ENV__, %{table: table}
+        raise e
+    end
+  end
+
+  @doc """
+  Pretty prints any error you pass on to this func.
+
+  ex  : exception object
+  env: __ENV__ object of the function
+  vars: a map with all the vars you want to control. i.e: %{var1: var1}
+  """
+  def error_logger(ex, env, vars \\ []) do
+    env = Macro.Env.stacktrace(env) |> hd
+    message = "[#{env |> elem(0)}.#{env |> elem(1)}]: #{inspect ex}
+    file: #{env |> elem(3) |> hd |> elem(1)}
+    line: #{env |> elem(3) |> tl |> hd |> elem(1)}
+    vars: #{inspect vars}"
+    message #let's return the message to debug
   end
 
 end

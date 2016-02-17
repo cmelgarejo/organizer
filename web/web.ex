@@ -55,6 +55,7 @@ defmodule Organizer.Web do
       import Organizer.Router.Helpers
       import Organizer.ErrorHelpers
       import Organizer.Gettext
+      import Organizer.Utilities
     end
   end
 

@@ -2,7 +2,13 @@ defmodule Organizer.SessionController do
   use Organizer.Web, :controller
 
   def index(conn, _params) do
-    render conn, "index.html"
+    if Organizer.AuthController.options[:single_user] do
+      conn
+      |> clear_flash
+      |> redirect(to: auth_path(conn, :index, "single_user"))
+    else
+      render conn, "index.html"
+    end
   end
 
   def logout(conn, params) do

@@ -23,7 +23,7 @@
   <div class="form-group">
     <%= label f, :due_date, gettext("Due date"), class: "control-label" %>
     <%= datetime_select f, :due_date, default: Ecto.DateTime.cast!(:calendar.local_time), builder: fn b -> %>
-    <%= b.(:day, []) %> / <%= b.(:month, [options: Organizer.Utilities.l10n_select_date_months]) %> / <%= b.(:year, []) %>
+    <%= b.(:day, []) %> / <%= b.(:month, [options: l10n_select_date_months]) %> / <%= b.(:year, []) %>
     -
     <%= b.(:hour, []) %> : <%= b.(:min, []) %>
     <% end %>

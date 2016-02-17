@@ -3,6 +3,7 @@ defmodule Organizer.ClientController do
 
   alias Organizer.Client
   alias Organizer.Alert
+  import Organizer.Repo
 
   plug Organizer.Plug.Authenticate
   plug :scrub_params, "client" when action in [:create, :update]
@@ -27,10 +28,11 @@ defmodule Organizer.ClientController do
     session = organizer_session(conn)
     changeset = Client.changeset(%Client{user_id: session.id}, client_params)
     case Repo.insert(changeset) do
-      {:ok, _client} ->
+      {:ok, client} ->
+        query("SELECT public.fn_raise_payment_alerts();", [])
         conn
         |> put_flash(:info, gettext("Client created successfully."))
-        |> redirect(to: client_path(conn, :show, changeset))
+        |> redirect(to: client_path(conn, :show, client))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -54,6 +56,8 @@ defmodule Organizer.ClientController do
     changeset = Client.changeset(client, client_params)
     case Repo.update(changeset) do
       {:ok, client} ->
+        query("DELETE from  public.fn_raise_payment_alerts();", [])
+        query("SELECT public.fn_raise_payment_alerts();", [])
         conn
         |> put_flash(:info, gettext("Client updated successfully."))
         |> redirect(to: client_path(conn, :show, client))
@@ -71,6 +75,6 @@ defmodule Organizer.ClientController do
 
     conn
     |> put_flash(:info, gettext("Client deleted successfully."))
-    |> redirect(to: client_path(conn, :show, client))
+    |> redirect(to: client_path(conn, :index))
   end
 end

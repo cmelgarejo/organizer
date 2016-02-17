@@ -29,7 +29,7 @@ defmodule Organizer.DashboardController do
 
   defimpl Poison.Encoder, for: Organizer.Alert do
     # This is a sigil that produces a list of atoms
-    @attributes ~W(description due_date notes status client_id client)a
+    @attributes ~W(id description due_date notes status client)a
 
     def encode(alert, _options) do
       alert

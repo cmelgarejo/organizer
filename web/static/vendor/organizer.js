@@ -99,6 +99,6 @@ function killAlert() {
 }
 
 function confirmDelete(){
-  confirm( "HUE")
-  return false;
+  var resp = confirm("Desea eliminar este registro?");
+  return resp;
 }
