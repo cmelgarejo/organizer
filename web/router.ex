@@ -23,7 +23,7 @@ defmodule Organizer.Router do
     get "/register", RegisterController, :index
     get "/profile",  UserController, :show
 
-    #get "/clients/:id/delete", ClientController, :delete
+    get "/clients/:id/delete", ClientController, :delete
     resources "/clients", ClientController
 
     get "/alerts/update_status/:id", AlertController, :update_status

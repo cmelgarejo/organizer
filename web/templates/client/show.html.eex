@@ -1,13 +1,18 @@
 <h3>
+<%= if @show do %>
 <button class="btn btn-primary" onclick="goBack();">
   <i class="zmdi zmdi-arrow-left"></i>&nbsp;<%= gettext("Back") %>
 </button>
-&nbsp;  <%= gettext("Client Details")%>&nbsp;
+<% else %>
+<button class="btn btn-primary" onclick="<%= client_path(@conn, :show) %>">
+  <i class="zmdi zmdi-arrow-left"></i>&nbsp;<%= gettext("Back") %>
+</button>
+<% end %>
+&nbsp;<%= gettext("Client Details")%>&nbsp;
 <a class="btn btn-default" href="<%= client_path(@conn, :edit, @client) %>">
   <i class="zmdi zmdi-edit"></i>&nbsp;<%= gettext("Edit") %>
 </a>
 </h3>
-
 <table class="table table-condensed table-stripped">
   <tbody>
     <tr>
@@ -48,7 +53,7 @@
 </table>
 
 
-<a href="<%= alert_path(@conn, :new) %>?client_id=<%= @client.id %>" class="btn btn-success btn-add">
+<a href="<%= alert_path(@conn, :new) %>?client_id=<%= @client.id %>" class="btn btn-success">
   <i class="zmdi zmdi-plus"></i>&nbsp;<%= gettext("Add new Alert") %>
 </a>
 <br><br><br>

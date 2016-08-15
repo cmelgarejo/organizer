@@ -38,7 +38,7 @@
   function setButtons(params) {
    var buttons = [
       {
-        icon: "edit", title: "<%= gettext("Edit") %>",
+        icon: "edit", title: "<%= gettext("Edit Alert") %>",
         path: '<%= alert_path(@conn, :index) %>/' + params.data.id + '/edit'
       },
       {
@@ -71,7 +71,6 @@
 
   document.addEventListener('DOMContentLoaded', function() {
     gridDiv = document.querySelector('#alert_grid');
-    //gridOptions.rowData = rowData;
     grid = new agGrid.Grid(gridDiv, gridOptions);
     window.addEventListener("resize", sizeToFit(grid, gridDiv, 220));
   });
@@ -80,14 +79,24 @@
     ajax("GET", "<%= dashboard_path(@conn, :grid_data) %>", null, true, onReadyStateChange)
   }
 
+
   function onReadyStateChange() {
     if (this.readyState == 4 && this.status == 200) {
       rowData = JSON.parse(this.responseText);
+      // model = gridOptions.api.getModel();
+      // model.forEachNode(function(t) {
+      //   console.log(t.data);
+      //   rowData.forEach(function(r) {
+      //     if(t.data.id == r.id) {
+      //       console.log(r)
+      //     }
+      //   });
+      // });
       gridOptions.api.setRowData(rowData);
       gridOptions.api.sizeColumnsToFit();
     }
   }
 
 })();
-
+var model;
 </script>

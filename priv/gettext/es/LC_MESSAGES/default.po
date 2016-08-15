@@ -10,7 +10,7 @@ msgstr ""
 msgid "Welcome to %{name}"
 msgstr "Le damos la bienvenida a: %{name}!"
 
-#: web/templates/client/index.html.eex:7 web/templates/layout/app.html.eex:55
+#: web/templates/client/index.html.eex:8 web/templates/layout/app.html.eex:61
 msgid "Clients"
 msgstr "Clientes"
 
@@ -18,7 +18,7 @@ msgstr "Clientes"
 msgid "Alert created successfully."
 msgstr "Alerta creada exitosamente"
 
-#: web/controllers/alert_controller.ex:79
+#: web/controllers/alert_controller.ex:75
 msgid "Alert deleted successfully."
 msgstr "Alerta eliminada exitosamente"
 
@@ -28,7 +28,8 @@ msgstr "Alerta actualizada exitosamente"
 
 #: web/templates/alert/edit.html.eex:3 web/templates/alert/new.html.eex:3
 #: web/templates/alert/show.html.eex:3 web/templates/client/edit.html.eex:3
-#: web/templates/client/new.html.eex:3 web/templates/client/show.html.eex:3
+#: web/templates/client/new.html.eex:3 web/templates/client/show.html.eex:4
+#: web/templates/client/show.html.eex:8
 msgid "Back"
 msgstr "Atrás"
 
@@ -40,7 +41,7 @@ msgstr "Algo malo ha ocurrido, por favor revisa los errores mencionados más aba
 msgid "Submit"
 msgstr "Guardar"
 
-#: web/templates/dashboard/index.html.eex:4 web/templates/layout/app.html.eex:64
+#: web/templates/dashboard/index.html.eex:4 web/templates/layout/app.html.eex:70
 msgid "Register now!"
 msgstr "Regístrate ahora!"
 
@@ -61,23 +62,24 @@ msgstr "Usuario eliminado exitosamente"
 msgid "User updated successfully."
 msgstr "Usuario actualizado exitosamente"
 
-#: web/templates/layout/app.html.eex:60
+#: web/templates/layout/app.html.eex:66
 msgid "Close session"
 msgstr "Cerrar sesión"
 
 #: web/controllers/dashboard_controller.ex:15
+#: web/controllers/dashboard_controller.ex:51
 msgid "An error has ocurred, please contact with the system administrator"
 msgstr ""
 
-#: web/templates/layout/app.html.eex:22
+#: web/templates/layout/app.html.eex:25
 msgid "Loading..."
 msgstr "Cargando..."
 
-#: web/templates/layout/app.html.eex:13
+#: web/templates/layout/app.html.eex:16
 msgid "No Rows To Show"
 msgstr "No hay datos para mostrar"
 
-#: web/templates/layout/app.html.eex:14
+#: web/templates/layout/app.html.eex:17
 msgid "Page"
 msgstr "Página"
 
@@ -90,7 +92,7 @@ msgstr "Perfil"
 msgid "User cannot be created."
 msgstr "El Usuario no pudo ser creado"
 
-#: web/controllers/session_controller.ex:14
+#: web/controllers/session_controller.ex:20
 msgid "You have been logged out!"
 msgstr "Has cerrado la sesión"
 
@@ -98,75 +100,74 @@ msgstr "Has cerrado la sesión"
 msgid "You need to be signed in to view this page"
 msgstr "Necesitas iniciar sesión para ver esta página"
 
-#: web/templates/client/form.html.eex:29 web/templates/client/index.html.eex:20
-#: web/templates/client/show.html.eex:26
+#: web/templates/client/form.html.eex:29 web/templates/client/index.html.eex:25
+#: web/templates/client/show.html.eex:31
 msgid "Charge Date"
 msgstr "Fecha de cobro"
 
-#: web/templates/client/form.html.eex:23 web/templates/client/index.html.eex:19
-#: web/templates/client/show.html.eex:22
+#: web/templates/client/form.html.eex:23 web/templates/client/index.html.eex:24
+#: web/templates/client/show.html.eex:27
 msgid "Fee Amount"
 msgstr "Monto a cobrar"
 
-#: web/templates/client/index.html.eex:16 web/templates/client/show.html.eex:61
+#: web/templates/client/index.html.eex:21 web/templates/client/show.html.eex:66
 #: web/templates/dashboard/index.html.eex:15
 msgid "Commands"
 msgstr "Comandos"
 
-#: web/templates/alert/show.html.eex:7 web/templates/client/show.html.eex:7
-#: web/templates/client/show.html.eex:80
-#: web/templates/dashboard/index.html.eex:37
+#: web/templates/alert/show.html.eex:7 web/templates/client/show.html.eex:13
+#: web/templates/client/show.html.eex:85
 msgid "Edit"
 msgstr "Editar"
 
-#: web/templates/client/form.html.eex:38 web/templates/client/index.html.eex:21
-#: web/templates/client/show.html.eex:32
-#: web/templates/dashboard/index.html.eex:20
+#: web/templates/client/form.html.eex:38 web/templates/client/index.html.eex:26
+#: web/templates/client/show.html.eex:37
+#: web/templates/dashboard/index.html.eex:20 web/templates/user/show.html.eex:28
 msgid "Email"
 msgstr ""
 
-#: web/templates/client/form.html.eex:11 web/templates/client/index.html.eex:17
-#: web/templates/client/show.html.eex:14
+#: web/templates/client/form.html.eex:11 web/templates/client/index.html.eex:22
+#: web/templates/client/show.html.eex:19 web/templates/user/show.html.eex:8
 msgid "Name"
 msgstr "Nombre"
 
-#: web/templates/layout/app.html.eex:49
+#: web/templates/layout/app.html.eex:55
 msgid "Organizer"
 msgstr "Organizer"
 
-#: web/templates/client/form.html.eex:44 web/templates/client/index.html.eex:22
-#: web/templates/client/show.html.eex:36
+#: web/templates/client/form.html.eex:44 web/templates/client/index.html.eex:27
+#: web/templates/client/show.html.eex:41
 #: web/templates/dashboard/index.html.eex:19
 msgid "Phone"
 msgstr "Teléfono"
 
-#: web/templates/client/show.html.eex:5
+#: web/templates/client/show.html.eex:11
 msgid "Client Details"
 msgstr "Detalles del Cliente"
 
 #: web/templates/alert/form.html.eex:11 web/templates/alert/show.html.eex:14
-#: web/templates/client/show.html.eex:64
+#: web/templates/client/show.html.eex:69
 #: web/templates/dashboard/index.html.eex:21
 msgid "Description"
 msgstr "Descripción"
 
 #: web/templates/alert/form.html.eex:24 web/templates/alert/show.html.eex:18
-#: web/templates/client/show.html.eex:63
+#: web/templates/client/show.html.eex:68
 #: web/templates/dashboard/index.html.eex:17
 msgid "Due date"
 msgstr "Fecha/hora de alerta"
 
-#: web/templates/client/index.html.eex:18
+#: web/templates/client/index.html.eex:23
 msgid "ID"
 msgstr "Documento"
 
 #: web/templates/alert/form.html.eex:18 web/templates/alert/show.html.eex:22
-#: web/templates/client/show.html.eex:65
+#: web/templates/client/show.html.eex:70
 #: web/templates/dashboard/index.html.eex:22
 msgid "Notes"
 msgstr "Notas"
 
-#: web/templates/client/show.html.eex:62
+#: web/templates/client/show.html.eex:67
 #: web/templates/dashboard/index.html.eex:16
 msgid "Status"
 msgstr "Atendida"
@@ -175,58 +176,54 @@ msgstr "Atendida"
 msgid "Client"
 msgstr "Cliente"
 
-#: web/templates/client/index.html.eex:41 web/templates/client/show.html.eex:84
-#: web/templates/dashboard/index.html.eex:41
+#: web/templates/client/show.html.eex:89
+#: web/templates/dashboard/index.html.eex:45
 msgid "Delete Alert"
 msgstr "Eliminar alerta"
-
-#: web/templates/client/index.html.eex:37
-msgid "Show Alert"
-msgstr "Ver alerta"
 
 #: web/templates/register/index.html.eex:8
 #: web/templates/session/index.html.eex:3
 msgid "Sign In"
 msgstr "Inicia tu sesión"
 
-#: web/controllers/client_controller.ex:32
+#: web/controllers/client_controller.ex:33
 msgid "Client created successfully."
 msgstr "Cliente creado exitosamente"
 
-#: web/controllers/client_controller.ex:73
+#: web/controllers/client_controller.ex:75
 msgid "Client deleted successfully."
 msgstr "Cliente eliminado exitosamente"
 
-#: web/controllers/client_controller.ex:58
+#: web/controllers/client_controller.ex:60
 msgid "Client updated successfully."
 msgstr "Cliente actualizado exitosamente"
 
 #: web/templates/alert/form.html.eex:34 web/templates/alert/show.html.eex:26
-#: web/templates/client/show.html.eex:40
+#: web/templates/client/show.html.eex:45
 msgid "Created"
 msgstr "Fecha de Creación"
 
-#: web/templates/client/show.html.eex:18
+#: web/templates/client/show.html.eex:23 web/templates/user/show.html.eex:13
 msgid "Doc"
 msgstr "Número de Documento"
 
-#: web/templates/client/show.html.eex:44
+#: web/templates/client/show.html.eex:49
 msgid "Updated"
 msgstr "Fecha de Actualización"
 
-#: web/templates/client/show.html.eex:52
+#: web/templates/client/show.html.eex:57
 msgid "Add new Alert"
-msgstr "Agregar nueva Alerta"
+msgstr "Nueva Alerta"
 
 #: web/templates/alert/show.html.eex:5
 msgid "Alert Details"
 msgstr "Detalles de la Alerta"
 
-#: web/templates/alert/edit.html.eex:5
+#: web/templates/alert/edit.html.eex:5 web/templates/dashboard/index.html.eex:41
 msgid "Edit Alert"
 msgstr "Editar alerta"
 
-#: web/templates/dashboard/index.html.eex:7
+#: web/templates/dashboard/index.html.eex:7 web/templates/layout/app.html.eex:60
 msgid "My Alerts"
 msgstr "Mis Alertas"
 
@@ -234,91 +231,91 @@ msgstr "Mis Alertas"
 msgid "New alert"
 msgstr "Nueva Alerta"
 
-#: web/templates/layout/app.html.eex:25
+#: web/templates/layout/app.html.eex:28
 msgid "*Blank*"
 msgstr "*Vacío*"
 
-#: web/templates/layout/app.html.eex:27
+#: web/templates/layout/app.html.eex:30
 msgid "Apply Filter..."
 msgstr "Aplicar Filtro..."
 
-#: web/templates/layout/app.html.eex:34
+#: web/templates/layout/app.html.eex:37
 msgid "Columns"
 msgstr "Columnas"
 
-#: web/templates/layout/app.html.eex:31
+#: web/templates/layout/app.html.eex:34
 msgid "Contains"
 msgstr "Contiene"
 
-#: web/templates/layout/app.html.eex:33
+#: web/templates/layout/app.html.eex:36
 msgid "Ends with"
 msgstr "Termina con"
 
-#: web/templates/layout/app.html.eex:28
+#: web/templates/layout/app.html.eex:31
 msgid "Equals"
 msgstr "Igual a"
 
-#: web/templates/layout/app.html.eex:26
+#: web/templates/layout/app.html.eex:29
 msgid "Filter..."
 msgstr "Filtro..."
 
-#: web/templates/layout/app.html.eex:20
+#: web/templates/layout/app.html.eex:23
 msgid "First"
 msgstr "Primero"
 
-#: web/templates/layout/app.html.eex:30
+#: web/templates/layout/app.html.eex:33
 msgid "Greater Than"
 msgstr "Mayor que"
 
-#: web/templates/layout/app.html.eex:19
+#: web/templates/layout/app.html.eex:22
 msgid "Last"
 msgstr "Último"
 
-#: web/templates/layout/app.html.eex:29
+#: web/templates/layout/app.html.eex:32
 msgid "Less Than"
 msgstr "Menor que"
 
-#: web/templates/layout/app.html.eex:15
+#: web/templates/layout/app.html.eex:18
 msgid "More"
 msgstr "Más"
 
-#: web/templates/layout/app.html.eex:18
+#: web/templates/layout/app.html.eex:21
 msgid "Next"
 msgstr "Siguiente"
 
-#: web/templates/layout/app.html.eex:17
+#: web/templates/layout/app.html.eex:20
 msgid "Of"
 msgstr "de"
 
-#: web/templates/layout/app.html.eex:35
+#: web/templates/layout/app.html.eex:38
 msgid "Pivot Cols"
 msgstr "Columnas pivotales"
 
-#: web/templates/layout/app.html.eex:36 web/templates/layout/app.html.eex:38
+#: web/templates/layout/app.html.eex:39 web/templates/layout/app.html.eex:41
 msgid "Please drag cols to here"
 msgstr "Por favor, arrastre columnas aquí"
 
-#: web/templates/layout/app.html.eex:21
+#: web/templates/layout/app.html.eex:24
 msgid "Previous"
 msgstr "Anterior"
 
-#: web/templates/layout/app.html.eex:24
+#: web/templates/layout/app.html.eex:27
 msgid "Search..."
 msgstr "Buscar..."
 
-#: web/templates/layout/app.html.eex:23
+#: web/templates/layout/app.html.eex:26
 msgid "Select All"
 msgstr "Seleccionar Todo"
 
-#: web/templates/layout/app.html.eex:32
+#: web/templates/layout/app.html.eex:35
 msgid "Starts with"
 msgstr "Comienza con"
 
-#: web/templates/layout/app.html.eex:16
+#: web/templates/layout/app.html.eex:19
 msgid "To"
 msgstr "A"
 
-#: web/templates/layout/app.html.eex:37
+#: web/templates/layout/app.html.eex:40
 msgid "Value Cols"
 msgstr "Columnas de Valor"
 
@@ -334,14 +331,47 @@ msgstr "Documento"
 msgid "Edit Client"
 msgstr "Editar Cliente"
 
-#: web/templates/layout/app.html.eex:54
-msgid "Dashboard"
-msgstr ""
-
-#: lib/utlities.ex:6 web/templates/client/form.html.eex:31
+#: lib/utilities.ex:13 web/templates/client/form.html.eex:31
 msgid " of each month"
 msgstr " de cada mes"
 
-#: lib/utlities.ex:6
+#: lib/utilities.ex:13
 msgid "The "
 msgstr "El "
+
+#: web/templates/client/index.html.eex:10
+msgid "Add new Client"
+msgstr "Nuevo Cliente"
+
+#: web/templates/user/show.html.eex:48
+msgid "Active"
+msgstr "Activo"
+
+#: web/templates/user/show.html.eex:43
+msgid "Demo"
+msgstr ""
+
+#: web/templates/user/show.html.eex:18
+msgid "Dob"
+msgstr "Fecha de Nacimiento"
+
+#: web/templates/user/show.html.eex:23
+msgid "Gender"
+msgstr "Género"
+
+#: web/templates/user/show.html.eex:38
+msgid "Locale"
+msgstr "Lenguaje"
+
+#: web/templates/user/show.html.eex:33
+msgid "Timezone"
+msgstr "Zona horaria"
+
+#: web/templates/client/index.html.eex:42
+msgid "Show Client"
+msgstr "Ver Cliente"
+
+#, fuzzy
+#: web/templates/client/index.html.eex:46
+msgid "Delete Client"
+msgstr "Eliminar Cliente"

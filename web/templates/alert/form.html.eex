@@ -9,7 +9,7 @@
 
   <div class="form-group">
     <%= label f, :description, gettext("Description"), class: "control-label" %>
-    <%= textarea f, :description, class: "form-control" %>
+    <%= textarea f, :description, class: "form-control", autofocus: "", required: "" %>
     <%= error_tag f, :description %>
   </div>
 
@@ -22,7 +22,7 @@
 
   <div class="form-group">
     <%= label f, :due_date, gettext("Due date"), class: "control-label" %>
-    <%= datetime_select f, :due_date, default: Ecto.DateTime.cast!(:calendar.local_time), builder: fn b -> %>
+    <%= datetime_select f, :due_date, required: "", default: Ecto.DateTime.cast!(:calendar.local_time), builder: fn b -> %>
     <%= b.(:day, []) %> / <%= b.(:month, [options: l10n_select_date_months]) %> / <%= b.(:year, []) %>
     -
     <%= b.(:hour, []) %> : <%= b.(:min, []) %>

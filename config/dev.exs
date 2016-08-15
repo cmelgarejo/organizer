@@ -36,7 +36,7 @@ config :phoenix, :stacktrace_depth, 20
 config :organizer, Organizer.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
-  password: "pgsql",
+  password: "postgres",
   database: "organizer",
   hostname: "localhost",
   pool_size: 50

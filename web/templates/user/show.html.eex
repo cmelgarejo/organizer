@@ -5,47 +5,47 @@
 <ul>
 
   <li>
-    <strong>Name:</strong>
+    <strong><%= gettext("Name")%>:</strong>
     <%= @user.name %>
   </li>
 
   <li>
-    <strong>Doc:</strong>
+    <strong><%= gettext("Doc")%>:</strong>
     <%= @user.doc %>
   </li>
 
   <li>
-    <strong>Dob:</strong>
+    <strong><%= gettext("Dob")%>:</strong>
     <%= @user.dob %>
   </li>
 
   <li>
-    <strong>Gender:</strong>
+    <strong><%= gettext("Gender")%>:</strong>
     <%= @user.gender %>
   </li>
 
   <li>
-    <strong>Email:</strong>
+    <strong><%= gettext("Email")%>:</strong>
     <%= @user.email %>
   </li>
 
   <li>
-    <strong>Timezone:</strong>
+    <strong><%= gettext("Timezone")%>:</strong>
     <%= @user.timezone %>
   </li>
 
   <li>
-    <strong>Locale:</strong>
+    <strong><%= gettext("Locale")%>:</strong>
     <%= @user.locale %>
   </li>
 
   <li>
-    <strong>Demo:</strong>
+    <strong><%= gettext("Demo")%>:</strong>
     <%= @user.demo %>
   </li>
 
   <li>
-    <strong>Active:</strong>
+    <strong><%= gettext("Active")%>:</strong>
     <%= @user.active %>
   </li>
 

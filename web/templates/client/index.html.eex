@@ -6,8 +6,8 @@
 
 <h2>
   <%= gettext("Clients")%>&nbsp;
-  <a class="btn btn-success" href="<%= client_path(@conn, :new) %>">
-    <i class="zmdi zmdi-plus"></i>&nbsp;<%= gettext("New Client") %>
+  <a class="btn btn-success btn-lg btn-add" href="<%= client_path(@conn, :new) %>">
+    <i class="zmdi zmdi-plus"></i>&nbsp;<%= gettext("Add new Client") %>
   </a>
 </h2>
 
@@ -39,11 +39,11 @@
   function setButtons(params) {
    var buttons = [
       {
-        icon: "eye", title: "<%= gettext("Show Alert") %>",
+        icon: "eye", title: "<%= gettext("Show Client") %>",
         path: '<%= client_path(@conn, :index) %>/' + params.data.id
       },
       {
-        icon: "delete", title: "<%= gettext("Delete Alert") %>",
+        icon: "delete", title: "<%= gettext("Delete Client") %>",
         path: '<%= client_path(@conn, :index) %>/' + params.data.id + '/delete',
         class: 'danger', method: "delete", onclick: "return confirmDelete()"
       },

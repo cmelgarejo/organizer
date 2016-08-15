@@ -41,6 +41,7 @@ defmodule Organizer.DashboardController do
   def grid_data(conn, _params) do
     try do
       session = organizer_session(conn)
+      Organizer.Repo.query("SELECT public.fn_raise_payment_alerts();", []) #update the stuff
       clients = Repo.all(from a in Organizer.Alert,
         join: c in assoc(a, :client),
         where: c.user_id == ^session.id and a.status == false,
