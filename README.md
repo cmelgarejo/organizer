@@ -1,6 +1,8 @@
 # Organizer
 
-To start your Phoenix app:
+Keep clients organized and keep tabs on how much they owe you! :+1:
+
+To start organizer app:
 
   * Install dependencies with `mix deps.get`
   * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
