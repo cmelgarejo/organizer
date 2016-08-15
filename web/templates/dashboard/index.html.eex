@@ -1,0 +1,102 @@
+<%= if !@session do %>
+<div class="jumbotron">
+  <h2><%= gettext "Welcome to %{name}", name: "Organizer" %></h2>
+  <%= link gettext("Register now!"), to: register_path(@conn, :index), class: "btn btn-primary btn-lg" %>
+</div>
+<% else %>
+  <h2><%= gettext "My Alerts" %></h2>
+  <div id="alert_grid" class="ag-grid ag-responsive ag-blue"></div>
+<% end %>
+
+<script>
+(function() {
+  var grid, gridDiv;
+  var columnDefs = [
+    {headerName: "<%= gettext("Commands") %>",                          width: 100, cellRenderer: setButtons,  suppressSizeToFit: true, suppressResize: true},
+    {headerName: "<%= gettext("Status") %>", field: "status",           width: 100, cellRenderer: setCheckbox, suppressSizeToFit: true, suppressResize: true},
+    {headerName: "<%= gettext("Due date") %>", field: "due_date",       width: 170, cellRenderer: setDate,     suppressSizeToFit: true, suppressResize: false},
+    {headerName: "<%= gettext("Client") %>", field: "client.name",      width: 200, cellRenderer: setLink,     suppressSizeToFit: true},
+    {headerName: "<%= gettext("Phone") %>",  field: "client.phone",     width: 120, editable: true, newValueHandler: setNewValue, suppressSizeToFit: true},
+    {headerName: "<%= gettext("Email") %>",  field: "client.email",     width: 200, editable: true, newValueHandler: setNewValue, suppressSizeToFit: true},
+    {headerName: "<%= gettext("Description") %>", field: "description", width: 200, suppressSizeToFit: true},
+    {headerName: "<%= gettext("Notes") %>", field: "notes",             width: 208, suppressSizeToFit: false},
+  ];
+
+  function setDate(params) {
+    return params.data.due_date.replace("T", " ").replace("Z", "");
+  }
+
+  function setNewValue(params) {
+    return returnTheSame(params);
+  }
+
+  function setLink(params) {
+    return linkTo('<%= client_path(@conn, :index) %>/'
+      + params.data.client.id, params.data.client.name);
+  }
+
+  function setButtons(params) {
+   var buttons = [
+      {
+        icon: "edit", title: "<%= gettext("Edit Alert") %>",
+        path: '<%= alert_path(@conn, :index) %>/' + params.data.id + '/edit'
+      },
+      {
+        icon: "delete", title: "<%= gettext("Delete Alert") %>",
+        path: '<%= alert_path(@conn, :index) %>/' + params.data.id + '/delete',
+        class: 'danger', method: "delete", onclick: "return confirmDelete()"
+      },
+    ];
+    return gridCommands(buttons);
+  }
+
+  function setCheckbox(params) {
+    var method = "GET", path = "/alerts/update_status/"
+      + params.data.id + "?status=true&_csrf_token=<%= get_csrf_token %>";
+    return cellCheckbox(params, method, path);
+  }
+
+  var gridOptions = {
+      enableSorting: true,
+      rowSelection: 'single',
+      enableFilter: true,
+      enableColResize: true,
+      columnDefs: columnDefs,
+      localeText: gridLocaleText,
+      onGridReady: function() {
+        reloadGrid();
+        setInterval(reloadGrid, 3000);
+      }
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    gridDiv = document.querySelector('#alert_grid');
+    grid = new agGrid.Grid(gridDiv, gridOptions);
+    window.addEventListener("resize", sizeToFit(grid, gridDiv, 220));
+  });
+
+  function reloadGrid(){
+    ajax("GET", "<%= dashboard_path(@conn, :grid_data) %>", null, true, onReadyStateChange)
+  }
+
+
+  function onReadyStateChange() {
+    if (this.readyState == 4 && this.status == 200) {
+      rowData = JSON.parse(this.responseText);
+      // model = gridOptions.api.getModel();
+      // model.forEachNode(function(t) {
+      //   console.log(t.data);
+      //   rowData.forEach(function(r) {
+      //     if(t.data.id == r.id) {
+      //       console.log(r)
+      //     }
+      //   });
+      // });
+      gridOptions.api.setRowData(rowData);
+      gridOptions.api.sizeColumnsToFit();
+    }
+  }
+
+})();
+var model;
+</script>

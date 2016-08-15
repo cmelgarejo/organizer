@@ -1,0 +1,89 @@
+<!-- <div class="btn-float-div">
+  <a href="<%= client_path(@conn, :new) %>" class="btn btn-success btn-float">
+    <i class="zmdi zmdi-plus"></i>
+  </a>
+</div> -->
+
+<h2>
+  <%= gettext("Clients")%>&nbsp;
+  <a class="btn btn-success btn-lg btn-add" href="<%= client_path(@conn, :new) %>">
+    <i class="zmdi zmdi-plus"></i>&nbsp;<%= gettext("Add new Client") %>
+  </a>
+</h2>
+
+<div id="client_grid" class="ag-grid ag-responsive ag-blue"></div>
+
+<script>
+(function() {
+  var grid, gridDiv;
+
+  var columnDefs = [
+    {headerName: '<%= gettext("Commands") %>', width: 100, cellRenderer: setButtons,  suppressSizeToFit: true, suppressResize: true},
+    {headerName: '<%= gettext("Name") %>', field: "name", cellRenderer: setLink, suppressSizeToFit: true},
+    {headerName: '<%= gettext("ID") %>', field: 'doc'},
+    {headerName: '<%= gettext("Fee Amount") %>', field: 'fee_amount'},
+    {headerName: '<%= gettext("Charge Date") %>', field: 'charge_date'},
+    {headerName: '<%= gettext("Email") %>', field: 'email', editable: true, newValueHandler: setNewValue},
+    {headerName: '<%= gettext("Phone") %>', field: 'phone', editable: true, newValueHandler: setNewValue},
+  ];
+
+  function setNewValue(params) {
+    return returnTheSame(params);
+  }
+
+  function setLink(params) {
+    return linkTo('<%= client_path(@conn, :index) %>/'
+      + params.data.id, params.data.name);
+  }
+
+  function setButtons(params) {
+   var buttons = [
+      {
+        icon: "eye", title: "<%= gettext("Show Client") %>",
+        path: '<%= client_path(@conn, :index) %>/' + params.data.id
+      },
+      {
+        icon: "delete", title: "<%= gettext("Delete Client") %>",
+        path: '<%= client_path(@conn, :index) %>/' + params.data.id + '/delete',
+        class: 'danger', method: "delete", onclick: "return confirmDelete()"
+      },
+    ];
+    return gridCommands(buttons);
+  }
+
+  function setCheckbox(params) {
+    return cellCheckbox(params, null);
+  }
+
+  var rowData = [
+    <%= for client <- @clients do %>
+    { id: '<%= client.id %>', name: '<%= json_parse_text client.name %>', doc: '<%= json_parse_text client.doc %>',
+      fee_amount: '<%= client.fee_amount %>',
+      charge_date: '<%= day_of_each_month(client.charge_date.day) %>',
+      email: '<%= json_parse_text client.email %>', phone: '<%= json_parse_text client.phone %>'},
+    <% end %>
+  ];
+
+  var gridOptions = {
+      enableSorting: true,
+      rowSelection: 'single',
+      enableFilter: true,
+      enableColResize: true,
+      columnDefs: columnDefs,
+      localeText: gridLocaleText,
+      onGridReady: function() {
+          gridOptions.api.sizeColumnsToFit();
+      }
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    gridDiv = document.querySelector('#client_grid');
+    gridOptions.rowData = rowData;
+    grid = new agGrid.Grid(gridDiv, gridOptions);
+    sizeToFit(grid, gridDiv, 220);
+    window.addEventListener("resize", sizeToFit(grid, gridDiv, 220));
+  });
+
+})();
+
+</script>

@@ -1,0 +1,157 @@
+@font-face {
+  font-family: 'PT Sans Narrow';
+  font-style: normal;
+  font-weight: 400;
+  src: local('PT Sans Narrow'), local('PTSans-Narrow'), url(../fonts/UyYrYy3ltEffJV9QueSi4UU-p1xzoRgkupcXIqgYFBc.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+/* Space out content a bit */
+body {
+  background-color: #F9F9F9;
+  font-family: "PT Sans Narrow";
+  min-width: 600px;
+}
+body, form, ul, table {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* Phoenix flash messages */
+.alert:empty { display: none; }
+.alert { font-size: 14pt; }
+
+/* Phoenix inline forms in links and buttons */
+form.link, form.button {
+  display: inline;
+}
+
+/* Custom page header */
+.header {
+  border-bottom: 1px solid #e5e5e5;
+}
+.logo {
+  width: 64px;
+  height: 64px;
+  display: inline-block;
+  margin-bottom: 1em;
+  background-image: url("/images/logo.png");
+  background-size: 64px 64px;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/* Customize container */
+@media (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+}
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Main marketing message */
+.jumbotron {
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* Supporting marketing content */
+.marketing {
+  margin: 35px 0;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  .ag-responsive {
+    height: 600px;
+  }
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .ag-responsive {
+    height: 100px;
+  }
+}
+.nav-pills > li > a.btn-danger:hover {
+  background-color: #d43f3a !important;
+}
+.nav-pills > li > a.btn-info:hover {
+  background-color: #337ab7 !important;
+}
+.nav-pills > li > a.btn-success:hover {
+  background-color: #4cae4c !important;
+}
+.center {
+  text-align: center;
+  align-items: center;
+}
+
+/* BTN FLOAT */
+a.btn-float {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  position: absolute;
+  line-height: 48px;
+}
+a.btn-float:hover {
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.18);
+}
+a.btn-float i {
+  font-size: 28px;
+}
+a.btn-float:not(.bgm-white):not(.bgm-gray) > i {
+  color: #fff;
+}
+a.btn-float.bgm-white > i,
+a.btn-float.bgm-gray > i {
+  color: #333;
+}
+
+.alert-float {
+  float: left !important;
+  position: absolute !important;
+  top: 1px !important;
+}
+
+div.btn-float-div {
+  float:right !important;
+  width: 50px;
+}
+
+.disabled {
+  disabled: disabled;
+}
+
+.ag-root {
+  font-family: 'Calibri', 'PT Sans Narrow' !important;
+  font-size: 12pt !important;
+}
+
+.ag-header  {
+  font-family: 'PT Sans Narrow' !important;
+}
+
+.btn-add {
+  font-size: 16px;
+}

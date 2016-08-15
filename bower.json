@@ -1,0 +1,36 @@
+{
+    "name": "organizer",
+  "description": "The best way to organize your clients and their payments!",
+  "main": "mix.exs",
+  "authors": [
+    "Christian Melgarejo Bresanovich <christian.melgarejo@outlook.com>"
+  ],
+  "license": "Propietary",
+  "moduleType": [],
+  "homepage": "https://organizer.cmelgarejo.net",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ag-grid": "~3.3",
+    "material-design-iconic-font": "^2.2.0",
+    "bootstrap-css": "~3.3.6"
+  },
+  "overrides": {
+    "bootstrap-css" : {
+      "main": [ "css/bootstrap.min.css" ]
+    },
+    "ag-grid": {
+      "main": [
+        "dist/ag-grid.min.js",
+        "dist/styles/ag-grid.css",
+        "dist/styles/theme-blue.min.css"
+      ]
+    }
+  }
+}

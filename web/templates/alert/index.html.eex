@@ -1,0 +1,32 @@
+<h2>Listing alerts</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>Due date</th>
+      <th>Notes</th>
+      <th>Status</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for alert <- @alerts do %>
+    <tr>
+      <td><%= alert.description %></td>
+      <td><%= alert.due_date %></td>
+      <td><%= alert.notes %></td>
+      <td><%= alert.status %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: alert_path(@conn, :show, alert), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: alert_path(@conn, :edit, alert), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: alert_path(@conn, :delete, alert), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New alert", to: alert_path(@conn, :new) %>

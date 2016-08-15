@@ -1,0 +1,52 @@
+<h2><%= gettext("Profile")%></h2>
+
+<img src='<%= @user.image_url %>' class="pull-right"/>
+
+<ul>
+
+  <li>
+    <strong><%= gettext("Name")%>:</strong>
+    <%= @user.name %>
+  </li>
+
+  <li>
+    <strong><%= gettext("Doc")%>:</strong>
+    <%= @user.doc %>
+  </li>
+
+  <li>
+    <strong><%= gettext("Dob")%>:</strong>
+    <%= @user.dob %>
+  </li>
+
+  <li>
+    <strong><%= gettext("Gender")%>:</strong>
+    <%= @user.gender %>
+  </li>
+
+  <li>
+    <strong><%= gettext("Email")%>:</strong>
+    <%= @user.email %>
+  </li>
+
+  <li>
+    <strong><%= gettext("Timezone")%>:</strong>
+    <%= @user.timezone %>
+  </li>
+
+  <li>
+    <strong><%= gettext("Locale")%>:</strong>
+    <%= @user.locale %>
+  </li>
+
+  <li>
+    <strong><%= gettext("Demo")%>:</strong>
+    <%= @user.demo %>
+  </li>
+
+  <li>
+    <strong><%= gettext("Active")%>:</strong>
+    <%= @user.active %>
+  </li>
+
+</ul>

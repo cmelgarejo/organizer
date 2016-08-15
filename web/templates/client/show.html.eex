@@ -1,0 +1,129 @@
+<h3>
+<%= if @show do %>
+<button class="btn btn-primary" onclick="goBack();">
+  <i class="zmdi zmdi-arrow-left"></i>&nbsp;<%= gettext("Back") %>
+</button>
+<% else %>
+<button class="btn btn-primary" onclick="<%= client_path(@conn, :show) %>">
+  <i class="zmdi zmdi-arrow-left"></i>&nbsp;<%= gettext("Back") %>
+</button>
+<% end %>
+&nbsp;<%= gettext("Client Details")%>&nbsp;
+<a class="btn btn-default" href="<%= client_path(@conn, :edit, @client) %>">
+  <i class="zmdi zmdi-edit"></i>&nbsp;<%= gettext("Edit") %>
+</a>
+</h3>
+<table class="table table-condensed table-stripped">
+  <tbody>
+    <tr>
+      <td><strong><%= gettext("Name") %></strong></td>
+      <td><%= @client.name %></td>
+    </tr>
+    <tr>
+      <td><strong><%= gettext("Doc") %></strong></td>
+      <td><%= @client.doc %></td>
+    </tr>
+    <tr>
+      <td><strong><%= gettext("Fee Amount")%></strong></td>
+      <td><%= @client.fee_amount %></td>
+    </tr>
+    <tr>
+      <td><strong><%= gettext("Charge Date") %></strong></td>
+      <td>
+      <%= day_of_each_month(@client.charge_date.day) %>
+      </td>
+    </tr>
+    <tr>
+      <td><strong><%= gettext("Email") %></strong></td>
+      <td><%= @client.email %></td>
+    </tr>
+    <tr>
+      <td><strong><%= gettext("Phone") %></strong></td>
+      <td><%= @client.phone %></td>
+    </tr>
+    <tr>
+      <td><strong><%= gettext("Created") %></strong></td>
+      <td><%= @client.inserted_at %></td>
+    </tr>
+    <tr>
+      <td><strong><%= gettext("Updated") %></strong></td>
+      <td><%= @client.updated_at %></td>
+    </tr>
+  </tbody>
+</table>
+
+
+<a href="<%= alert_path(@conn, :new) %>?client_id=<%= @client.id %>" class="btn btn-success">
+  <i class="zmdi zmdi-plus"></i>&nbsp;<%= gettext("Add new Alert") %>
+</a>
+<br><br><br>
+<div id="alert_grid" class="ag-grid ag-responsive ag-blue"></div>
+
+<script>
+(function() {
+  var grid, gridDiv;
+  var columnDefs = [
+    {headerName: "<%= gettext("Commands") %>",                      width: 100, cellRenderer: setButtons,  suppressSizeToFit: true, suppressResize: true},
+    {headerName: "<%= gettext("Status") %>", field: "status",       width: 100, cellRenderer: setCheckbox, suppressSizeToFit: true, suppressResize: true},
+    {headerName: "<%= gettext("Due date") %>", field: "due_date",   width: 170,                            suppressSizeToFit: true, suppressResize: true},
+    {headerName: "<%= gettext("Description") %>", field: "description"},
+    {headerName: "<%= gettext("Notes") %>", field: "notes"},
+  ];
+
+  function setNewValue(params) {
+    return returnTheSame(params);
+  }
+
+  function setLink(params) {
+    return linkTo('<%= client_path(@conn, :index) %>/'
+      + params.data.client_id, params.data.client);
+  }
+
+  function setButtons(params) {
+   var buttons = [
+      {
+        icon: "edit", title: "<%= gettext("Edit") %>",
+        path: '<%= alert_path(@conn, :index) %>/' + params.data.id + '/edit'
+      },
+      {
+        icon: "delete", title: "<%= gettext("Delete Alert") %>",
+        path: '<%= alert_path(@conn, :index) %>/' + params.data.id + '/delete',
+        class: 'danger', method: "delete"
+      },
+    ];
+    return gridCommands(buttons);
+  }
+
+  function setCheckbox(params) {
+    var method = "GET", path = "/alerts/update_status/"
+      + params.data.id + "?status=true&_csrf_token=<%= get_csrf_token %>";
+    return cellCheckbox(params, method, path);
+  }
+
+  var rowData = [
+    <%= for alert <- @alerts do %>
+    { id: '<%= alert.id %>', status: <%= alert.status %>, description: '<%= String.replace(alert.description, "\r\n", "\\n") %>',
+      due_date: '<%= alert.due_date %>', notes: '<%= String.replace(alert.notes, "\r\n", "\\n") %>' },
+    <% end %>
+  ];
+
+  var gridOptions = {
+      enableSorting: true,
+      rowSelection: 'single',
+      enableFilter: true,
+      enableColResize: true,
+      columnDefs: columnDefs,
+      localeText: gridLocaleText
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    gridDiv = document.querySelector('#alert_grid');
+    gridOptions.rowData = rowData;
+    grid = new agGrid.Grid(gridDiv, gridOptions);
+    sizeToFit(grid, gridDiv, 560);
+    window.addEventListener("resize", sizeToFit(grid, gridDiv, 560));
+  });
+
+})();
+
+</script>
